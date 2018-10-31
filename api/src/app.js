@@ -26,7 +26,7 @@ const app = express();
 dotEnv.config();
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://admin:lFn5OvxQmohxo666@ds133642.mlab.com:33642/3750_dasi', { useNewUrlParser: true })
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })
   .then(() => {
     console.log('Successfully connected to the database');
   }).catch((err) => {

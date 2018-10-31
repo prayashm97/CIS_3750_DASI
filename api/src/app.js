@@ -7,13 +7,17 @@ const mongoose = require('mongoose');
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   type Query {
-    hello: String
+    quoteOfTheDay: String
+    random: Float!
+    rollThreeDice: [Int]
   }
 `);
 
 // The root provides a resolver function for each API endpoint
 const root = {
-  hello: () => 'Hello world!',
+  quoteOfTheDay: () => (Math.random() < 0.5 ? 'Take it easy' : 'Salvation lies within'),
+  random: () => Math.random(),
+  rollThreeDice: () => [1, 2, 3].map(_ => 1 + Math.floor(Math.random() * 6)),
 };
 
 const app = express();

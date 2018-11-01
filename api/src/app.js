@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const { buildSchema } = require('graphql');
@@ -18,7 +20,7 @@ const schema = buildSchema(`
 const root = {
   quoteOfTheDay: () => (Math.random() < 0.5 ? 'Take it easy' : 'Salvation lies within'),
   random: () => Math.random(),
-  rollThreeDice: () => [1, 2, 3].map(_ => 1 + Math.floor(Math.random() * 6)),
+  rollThreeDice: () => [1, 2, 3].map(() => 1 + Math.floor(Math.random() * 6)),
   hello: () => 'hello world',
 };
 
@@ -41,3 +43,5 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 module.exports = app;
+// app.listen(4000);
+// console.log('Running a GraphQL API server at localhost:4000/graphql');

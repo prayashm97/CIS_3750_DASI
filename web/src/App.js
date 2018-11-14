@@ -1,20 +1,39 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Login } from "../src/components/login";
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      login: "no",
+    }
+  }
+
+  handleLogin = (email, password) => {
+    this.setState({login: "yes"});
+    console.log(email, password);
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          This is just a testing thing.
-        </p>
+    const { login } = this.state;
+
+    let renderContent;
+
+    if (login === "no") {
+      renderContent = <Login handleLogin={this.handleLogin}/>
+    } else if (login === "yes") {
+      renderContent = <React.Fragment>
+        Congradulations You logged In
+      </React.Fragment>
+    } else {
+      renderContent = <div>
+        Something went wrong, you shouldn't see this.
       </div>
-    );
+    }
+
+    return <React.Fragment>{renderContent}</React.Fragment>
   }
 }
 

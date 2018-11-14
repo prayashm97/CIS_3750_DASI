@@ -1,4 +1,4 @@
-/* tslint:disable:no-console */
+/* eslint-disable no-console */
 
 const app = require('./app');
 

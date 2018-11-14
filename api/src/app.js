@@ -5,19 +5,8 @@ const graphqlHTTP = require('express-graphql');
 const dotEnv = require('dotenv');
 const mongoose = require('mongoose');
 
+// where our graphql schema is living right now
 const schema = require('./schema');
-
-
-// Construct a schema, using GraphQL schema language
-
-
-// // The root provides a resolver function for each API endpoint
-// const root = {
-//   quoteOfTheDay: () => (Math.random() < 0.5 ? 'Take it easy' : 'Salvation lies within'),
-//   random: () => Math.random(),
-//   rollThreeDice: () => [1, 2, 3].map(() => 1 + Math.floor(Math.random() * 6)),
-//   hello: () => 'hello world',
-// };
 
 const app = express();
 dotEnv.config();

@@ -2,27 +2,22 @@
 
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-const { buildSchema } = require('graphql');
 const dotEnv = require('dotenv');
 const mongoose = require('mongoose');
 
-// Construct a schema, using GraphQL schema language
-const schema = buildSchema(`
-  type Query {
-    quoteOfTheDay: String
-    random: Float!
-    rollThreeDice: [Int]
-    hello: String
-  }
-`);
+const schema = require('./schema');
 
-// The root provides a resolver function for each API endpoint
-const root = {
-  quoteOfTheDay: () => (Math.random() < 0.5 ? 'Take it easy' : 'Salvation lies within'),
-  random: () => Math.random(),
-  rollThreeDice: () => [1, 2, 3].map(() => 1 + Math.floor(Math.random() * 6)),
-  hello: () => 'hello world',
-};
+
+// Construct a schema, using GraphQL schema language
+
+
+// // The root provides a resolver function for each API endpoint
+// const root = {
+//   quoteOfTheDay: () => (Math.random() < 0.5 ? 'Take it easy' : 'Salvation lies within'),
+//   random: () => Math.random(),
+//   rollThreeDice: () => [1, 2, 3].map(() => 1 + Math.floor(Math.random() * 6)),
+//   hello: () => 'hello world',
+// };
 
 const app = express();
 dotEnv.config();
@@ -38,7 +33,7 @@ mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })
 
 app.use('/graphql', graphqlHTTP({
   schema,
-  rootValue: root,
+  // rootValue: root,
   graphiql: true,
 }));
 

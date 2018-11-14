@@ -8,6 +8,18 @@ const resolvers = {
     allScreens() {
       return Screen.find({});
     },
+    quoteOfTheDay() {
+      return (Math.random() < 0.5 ? 'Take it easy' : 'Salvation lies within');
+    },
+    random() {
+      return Math.random();
+    },
+    rollThreeDice() {
+      return [1, 2, 3].map(() => 1 + Math.floor(Math.random() * 6));
+    },
+    hello() {
+      return 'hello world';
+    },
   },
   Mutation: {
     async createScreen(root, {

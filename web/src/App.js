@@ -8,6 +8,7 @@ class App extends Component {
 
     this.state = {
       login: "no",
+      authUser: null,
     }
   }
 
@@ -17,15 +18,15 @@ class App extends Component {
   }
 
   render() {
-    const { login } = this.state;
+    const { authUser } = this.state;
 
     let renderContent;
 
-    if (login === "no") {
+    if (authUser === null) {
       renderContent = <Login handleLogin={this.handleLogin}/>
-    } else if (login === "yes") {
+    } else if (authUser) {
       renderContent = <React.Fragment>
-        Congradulations You logged In
+        Congratulations You logged In
       </React.Fragment>
     } else {
       renderContent = <div>

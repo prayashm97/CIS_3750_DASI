@@ -1,24 +1,41 @@
 import React from "react";
 import { SignUp } from './signUp';
 
+import { auth } from '../firebase';
+
+const INITIAL_STATE = {
+    email: '',
+    password: '',
+    error: null,
+    signUp: false,
+  };
+
 export class Login extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            email: '',
-            password: '',
-            signUp: false,
-        }
+        this.state = { ...INITIAL_STATE }
     }
 
-    handleChange = (name) => e => {
-        e.preventDefault();
-        this.setState({[name]: e.currentTarget.value});
+    handleChange = (name, value) => {
+        this.setState({[name]: value});
     }
 
-    handleLogin = () => {
-        this.props.handleLogin(this.state.email, this.state.password);
+    handleLogin = (event) => {
+        const {
+            email,
+            password,
+          } = this.state;
+
+        auth.doSignInWithEmailAndPassword(email, password)
+            .then(() => {
+                this.setState({ ...INITIAL_STATE });
+            })
+            .catch(error => {
+                this.setState(this.handleChange('error', error));
+        });
+    
+        event.preventDefault();
     }
 
     handleSignUp = () => {
@@ -26,7 +43,11 @@ export class Login extends React.Component {
     }
 
     render() {
-        const { signUp } = this.state;
+        const {
+            email,
+            password,
+            signUp,
+        } = this.state;
 
         return (
             <div style={styles.loginContainer}>
@@ -39,16 +60,16 @@ export class Login extends React.Component {
                         signUp ? 
                         <SignUp handleSignUp={this.handleSignUp} />
                         :
-                        <div style={styles.loginForm}>
+                        <form onSubmit={this.handleLogin} style={styles.loginForm}>
                             <div style={styles.title}>Login</div>
-                            <input style={styles.input} placeholder="Email" type='text' value={this.state.email} onChange={this.handleChange('email')} />
-                            <input style={styles.input} placeholder="password" type='password' value={this.state.password} onChange={this.handleChange('password')} />
+                            <input style={styles.input} placeholder="Email" type='text' value={email} onChange={event => this.handleChange('email', event.target.value )} />
+                            <input style={styles.input} placeholder="password" type='password' value={password} onChange={event => this.handleChange('password', event.target.value )} />
                             <div style={styles.loginRow}>
                                 <div style={styles.forgot}>Forgot Password</div>
-                                <div style={styles.submit} onClick={this.handleLogin}>Sign In</div>
+                                <button style={styles.submit} type="submit">Sign In</button>
                             </div>
-                            <div style={styles.signUp} onClick={this.handleSignUp}>Sign Up</div>
-                        </div>
+                            <button style={styles.signUp} type="reset" onClick={this.handleSignUp}>Sign Up</button>
+                        </form>
                     }
                     
                 </div>
@@ -71,7 +92,7 @@ const styles = {
       boxSizing: "border-box",
       display: "flex",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
     },
     logo: {
         border: "1px solid grey",
@@ -119,6 +140,7 @@ const styles = {
         boxShadow: '2px 5px 5px 0px rgba(92,92,92,1)',
         cursor: 'pointer',
         display: 'inline-block',
+        fontSize: '0.9em',
     },
     signUp: {
         padding: "7px 12px",
@@ -126,6 +148,7 @@ const styles = {
         boxShadow: '2px 5px 5px 0px rgba(92,92,92,1)',
         cursor: 'pointer',
         width: '100%',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: '0.9em',
     }
 }

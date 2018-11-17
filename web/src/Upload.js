@@ -11,6 +11,7 @@ import CloudUpload from '@material-ui/icons/CloudUpload';
 
 import { withStyles } from '@material-ui/core/styles';
 
+import Thumbnail from './Thumbnail';
 const UPLOAD_URL = `http://localhost:3005`;
 
 const styles = theme => ({
@@ -86,7 +87,6 @@ class Upload extends Component {
         <Dialog maxWidth={'sm'} fullWidth open={open} onClose={this.handleClose}>
           <DialogTitle>Upload Image</DialogTitle>
           <DialogContent>
-            {/* <DialogContentText>1-2-3-4-5</DialogContentText> */}
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
               <div className="dropzone">
                 <Dropzone
@@ -124,11 +124,11 @@ class Upload extends Component {
 
           <aside>
             <h2>Uploaded images</h2>
-            <ul>
+            <div className={classes.dropzoneDiv}>
               {
-                this.state.images.map((f, i) => <li key={i}>{f}</li>)
+                  this.state.images.map((f, i) => <Thumbnail key={i} src={f} />)
               }
-            </ul>
+            </div>
           </aside>
           : <div></div>
         }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Login } from "../src/components/login";
 
 import { firebase } from './firebase';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 
 import Upload from './Upload'
 

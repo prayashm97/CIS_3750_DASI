@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Login } from "../src/components/login";
-// import logo from './logo.svg';
+
+import { firebase } from './firebase';
+import logo from './logo.svg';
+
 import Upload from './Upload'
 
 class App extends Component {
@@ -16,7 +19,14 @@ class App extends Component {
 
   handleLogin = (email, password) => {
     this.setState({login: "yes"});
-    console.log(email, password);
+  }
+
+  componentDidMount() {
+    firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? this.setState({ authUser })
+        : this.setState({ authUser: null });
+    });
   }
 
   render() {

@@ -4,8 +4,11 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.5.8",
+    "@material-ui/core": "^3.5.1",
+    "@material-ui/icons": "^3.0.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-dropzone": "^7.0.1",
     "react-scripts": "1.1.5"
   },
   "scripts": {

@@ -8,7 +8,7 @@ const INITIAL_STATE = {
     password: '',
     error: null,
     signUp: false,
-  };
+};
 
 export class Login extends React.Component {
     constructor(props) {
@@ -18,14 +18,14 @@ export class Login extends React.Component {
     }
 
     handleChange = (name, value) => {
-        this.setState({[name]: value});
+        this.setState({ [name]: value });
     }
 
     handleLogin = (event) => {
         const {
             email,
             password,
-          } = this.state;
+        } = this.state;
 
         auth.doSignInWithEmailAndPassword(email, password)
             .then(() => {
@@ -33,13 +33,13 @@ export class Login extends React.Component {
             })
             .catch(error => {
                 this.setState(this.handleChange('error', error));
-        });
-    
+            });
+
         event.preventDefault();
     }
 
     handleSignUp = () => {
-        this.setState({signUp: !this.state.signUp});
+        this.setState({ signUp: !this.state.signUp });
     }
 
     render() {
@@ -52,26 +52,26 @@ export class Login extends React.Component {
         return (
             <div style={styles.loginContainer}>
                 <div style={styles.loginLeftPanel}>
-                    <img style={styles.logo} alt="DASI Team Logo"/>
+                    <img style={styles.logo} alt="DASI Team Logo" />
                 </div>
-                <div style={styles.seperator}/>
+                <div style={styles.seperator} />
                 <div style={styles.loginRightPanel}>
                     {
-                        signUp ? 
-                        <SignUp handleSignUp={this.handleSignUp} />
-                        :
-                        <form onSubmit={this.handleLogin} style={styles.loginForm}>
-                            <div style={styles.title}>Login</div>
-                            <input style={styles.input} placeholder="Email" type='text' value={email} onChange={event => this.handleChange('email', event.target.value )} />
-                            <input style={styles.input} placeholder="password" type='password' value={password} onChange={event => this.handleChange('password', event.target.value )} />
-                            <div style={styles.loginRow}>
-                                <div style={styles.forgot}>Forgot Password</div>
-                                <button style={styles.submit} type="submit">Sign In</button>
-                            </div>
-                            <button style={styles.signUp} type="reset" onClick={this.handleSignUp}>Sign Up</button>
-                        </form>
+                        signUp ?
+                            <SignUp handleSignUp={this.handleSignUp} />
+                            :
+                            <form onSubmit={this.handleLogin} style={styles.loginForm}>
+                                <div style={styles.title}>Login</div>
+                                <input style={styles.input} placeholder="Email" type='text' value={email} onChange={event => this.handleChange('email', event.target.value)} />
+                                <input style={styles.input} placeholder="password" type='password' value={password} onChange={event => this.handleChange('password', event.target.value)} />
+                                <div style={styles.loginRow}>
+                                    <div style={styles.forgot}>Forgot Password</div>
+                                    <button style={styles.submit} type="submit">Sign In</button>
+                                </div>
+                                <button style={styles.signUp} type="reset" onClick={this.handleSignUp}>Sign Up</button>
+                            </form>
                     }
-                    
+
                 </div>
             </div>
         )
@@ -80,19 +80,19 @@ export class Login extends React.Component {
 
 const styles = {
     loginContainer: {
-      position: "absolute",
-      top: 0, right: 0, left: 0, bottom: 0,
-      background: "#FFF",
-      display: 'flex',
-      alignItems: "center",
+        position: "absolute",
+        top: 0, right: 0, left: 0, bottom: 0,
+        background: "#FFF",
+        display: 'flex',
+        alignItems: "center",
     },
     loginLeftPanel: {
-      width: 'calc(50% - 1px)',
-      position: 'relative',
-      boxSizing: "border-box",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
+        width: 'calc(50% - 1px)',
+        position: 'relative',
+        boxSizing: "border-box",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
     },
     logo: {
         border: "1px solid grey",
@@ -105,11 +105,11 @@ const styles = {
         width: '2px',
     },
     loginRightPanel: {
-      width: 'calc(50% - 1px)',
-      position: 'relative',
-      boxSizing: "border-box",
-      display: 'flex',
-      justifyContent: 'center',
+        width: 'calc(50% - 1px)',
+        position: 'relative',
+        boxSizing: "border-box",
+        display: 'flex',
+        justifyContent: 'center',
     },
     loginForm: {
         width: '300px',
@@ -132,7 +132,7 @@ const styles = {
     forgot: {
         fontSize: '0.7rem',
         cursor: 'pointer',
-        display: 'inline-block',        
+        display: 'inline-block',
     },
     submit: {
         padding: "7px 12px",

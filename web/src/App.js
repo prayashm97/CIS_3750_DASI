@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Login } from "../src/components/login";
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import Upload from './Upload'
-import './App.css';
 
 class App extends Component {
 
@@ -22,7 +21,6 @@ class App extends Component {
 
   render() {
     const { authUser } = this.state;
-
     let renderContent;
 
     if (authUser === null) {
@@ -34,20 +32,10 @@ class App extends Component {
     } else {
       renderContent = <div>
         Something went wrong, you shouldn't see this.
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          This is just a testing thing.
-        </p>
-        <Upload />
       </div>
     }
 
-    return <React.Fragment>{renderContent}</React.Fragment>
+    return <React.Fragment>{renderContent}</React.Fragment>;
   }
 }
 

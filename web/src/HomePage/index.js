@@ -74,25 +74,26 @@ class HomePage extends Component {
   
   */
   createHandle = () => {
-    fetch(`http://localhost:3001/graphql`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mutation: `{ createScreen(input: {
-        name: "${name}", 
-        slides: ${should be array of strings}, 
-        // put timing here if you want, it defaults to 3 seconds
-        doneBy:"${leave this as `5bec460d590441347c352dce`}"}) {
-          _id
-          name
-          doneBy {_id}
-          slides
-          timing
-        } }` }),
-    })
-    .then(res => res.json())
-    .then(({data})=> {
-      console.log(data)
-    })
+    // fetch(`http://localhost:3001/graphql`, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ mutation: `{ createScreen(input: {
+    //     name: "${name}", 
+    //     slides: ${should be array of strings}, 
+    //     // put timing here if you want, it defaults to 3 seconds
+    //     doneBy:"${leave this as `5bec460d590441347c352dce`}"}) {
+    //       _id
+    //       name
+    //       doneBy {_id}
+    //       slides
+    //       timing
+    //     } }` }),
+    // })
+    // .then(res => res.json())
+    // .then(({data})=> {
+    //   console.log(data)
+    // })
+    console.log("createHandle");
   }
 
   render() {

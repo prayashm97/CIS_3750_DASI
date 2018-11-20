@@ -46,7 +46,7 @@ const resolvers = {
       input,
     }) {
       try {
-        await Screen.remove(input);
+        await Screen.deleteOne(input);
         return true;
       } catch (e) {
         return false;

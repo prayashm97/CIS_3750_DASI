@@ -5,8 +5,6 @@ import HomePage from "./HomePage";
 import { firebase } from './firebase';
 // import logo from './logo.svg';
 
-import Upload from './components/Upload'
-
 class App extends Component {
 
   constructor(props) {

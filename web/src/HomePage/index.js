@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Upload from '../components/Upload';
 
 const styles = theme => ({
   root: {
@@ -40,6 +41,7 @@ class HomePage extends Component {
       <div className={classes.root}>
         <div className={classes.buttonDiv}>
           <Button variant="contained" className={classes.button}>Create New Project</Button>
+          <Upload />
         </div>
 
       </div>

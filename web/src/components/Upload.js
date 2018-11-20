@@ -60,6 +60,7 @@ class Upload extends Component {
     .then(res => res.json())
     .then(images => {
       const temp = `${UPLOAD_URL}${images.filepath}`
+      console.log(temp);
       this.setState({
         images: [...this.state.images, temp],
         uploading: false,

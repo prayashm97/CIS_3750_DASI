@@ -17,9 +17,11 @@ const Thumbnail = ({src}) => {
     >
       <img
         src={src}
-        height={'180px'}
-        alt={'hi all'}
-        width={'320px'}
+        maxheight={'180px'}
+        alt={`${src} DASI`}
+        maxhidth={'320px'}
+        width={`auto`}
+        height={'auto'}
       />
     </div>
   );

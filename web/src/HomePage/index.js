@@ -41,9 +41,7 @@ class HomePage extends Component {
       <div className={classes.root}>
         <div className={classes.buttonDiv}>
           <Button variant="contained" className={classes.button}>Create New Project</Button>
-          <Upload />
         </div>
-
       </div>
     );
   }

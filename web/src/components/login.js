@@ -65,7 +65,7 @@ class Login extends React.Component {
         return (
             <div style={styles.loginContainer}>
                 <div style={styles.loginLeftPanel}>
-                    <img src="https://upload-hub.herokuapp.com/uploaded/DASI_logo.png" alt="DASI Team Logo" />
+                    <img src="https://s3.amazonaws.com/cis3750dasi/DASI_logo.png" alt="DASI Team Logo" />
                 </div>
                 <div style={styles.seperator} />
                 <div style={styles.loginRightPanel}>

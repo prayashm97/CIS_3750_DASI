@@ -12,7 +12,7 @@ import CloudUpload from '@material-ui/icons/CloudUpload';
 import { withStyles } from '@material-ui/core/styles';
 
 import Thumbnail from './Thumbnail';
-const UPLOAD_URL = `http://localhost:3005`;
+const UPLOAD_URL = `https://upload-hub.herokuapp.com`;
 
 const styles = theme => ({
   dropzoneDiv: {
@@ -59,10 +59,10 @@ class Upload extends Component {
     })
     .then(res => res.json())
     .then(images => {
-      const temp = `${UPLOAD_URL}${images.filepath}`
-      console.log(temp);
+      console.log(images);
+      const temp = images.files;
       this.setState({
-        images: [...this.state.images, temp],
+        images: [...this.state.images, ...temp],
         uploading: false,
         open: false
       })
@@ -94,11 +94,10 @@ class Upload extends Component {
                   accept="image/*"
                   onDrop={this.onDrop.bind(this)}
                   onFileDialogCancel={this.onCancel.bind(this)}
-                  multiple={false}
+                  multiple
                 >
                   <div className={classes.dropzoneDiv}>
                     <CloudUpload classes={{fontSizeLarge: classes.icon}} fontSize={'large'} />
-
                   </div>
                   <div style={{ padding:'15px'}}>
                     <p>Drop Image to Upload</p>
@@ -122,14 +121,17 @@ class Upload extends Component {
         </Button>
 
         {this.state.images.length > 0 ?
-
+    
           <aside>
+            <div>
             <h2>Uploaded images</h2>
             <div className={classes.dropzoneDiv}>
               {
                   this.state.images.map((f, i) => <Thumbnail key={i} src={f} />)
               }
             </div>
+            </div>
+            
           </aside>
           : <div></div>
         }

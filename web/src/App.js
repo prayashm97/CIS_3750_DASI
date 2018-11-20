@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Login } from "../src/components/login";
+import HomePage from "./HomePage";
 
 import { firebase } from './firebase';
 // import logo from './logo.svg';
 
-import Upload from './Upload'
+import Upload from './components/Upload'
 
 class App extends Component {
 
@@ -36,9 +37,7 @@ class App extends Component {
     if (authUser === null) {
       renderContent = <Login handleLogin={this.handleLogin}/>
     } else if (authUser) {
-      renderContent = <React.Fragment>
-        Congratulations You logged In
-      </React.Fragment>
+      renderContent = <HomePage />
     } else {
       renderContent = <div>
         Something went wrong, you shouldn't see this.

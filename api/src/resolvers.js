@@ -42,6 +42,17 @@ const resolvers = {
       }
     },
 
+    async removeScreen(root, {
+      input,
+    }) {
+      try {
+        await Screen.remove(input);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    },
+
   },
 };
 

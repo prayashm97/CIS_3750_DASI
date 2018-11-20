@@ -4,12 +4,14 @@ const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const dotEnv = require('dotenv');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // where our graphql schema is living right now
 const schema = require('./schema');
 
 const app = express();
 dotEnv.config();
+app.use(cors());
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true })

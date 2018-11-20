@@ -1,9 +1,11 @@
+/* eslint-disable func-names */
 const mongoose = require('mongoose');
 
 const ScreenSchema = new mongoose.Schema({
   name: String,
   doneBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   slides: [mongoose.Schema.Types.Mixed],
+  timing: { type: Number, default: 3 },
 });
 
 const UserSchema = new mongoose.Schema({

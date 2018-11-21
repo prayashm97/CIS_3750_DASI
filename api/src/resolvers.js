@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const { User, Screen } = require('./model');
 
 const resolvers = {
@@ -57,14 +58,16 @@ const resolvers = {
       input,
     }) {
       try {
-       return await Screen.findOneAndUpdate({id: input.id}, {$set : 
-        {name: input.name, timing: input.timing, slides: input.slides}}, {new: true}, (err,doc) => {
+        return await Screen.findOneAndUpdate({ _id: input._id }, {
+          $set:
+        { name: input.name, timing: input.timing, slides: input.slides },
+        }, { new: true }, (err) => {
           if (err) {
-            throw new updateError;
+            throw err;
           }
-        }); 
-      } catch (updateError) {
-        return updateError;
+        });
+      } catch (err) {
+        return err;
       }
     },
 

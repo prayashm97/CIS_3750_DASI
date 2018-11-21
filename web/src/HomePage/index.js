@@ -3,6 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Upload from '../components/Upload';
 import Thumbnail from '../components/Thumbnail';
+import Header from '../components/header';
+import MyAccount from '../components/myAccount';
 
 const styles = theme => ({
   root: {
@@ -31,9 +33,13 @@ class HomePage extends Component {
 
     this.state = {
       loading: true,
-      projects: []
+      projects: [],
+      page: "project"
       // authUser: null,
     }
+
+      this.projectPageChange = this.projectPageChange.bind(this);
+      this.accountPageChange = this.accountPageChange.bind(this);
   }
 
   componentDidMount() {
@@ -96,40 +102,66 @@ class HomePage extends Component {
     console.log("createHandle");
   }
 
+    projectPageChange = () => {
+        this.setState({ page: "project" });
+    }
+
+    accountPageChange = () => {
+        this.setState({ page: "account" });
+    }
+
   render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.root}>
-        <div className={classes.buttonDiv}>
-          <Button variant="contained" className={classes.button} onClick={this.createHandle()}>Create New Project</Button>
-        </div>
+      const { classes } = this.props;
+      const page = this.state.page;
+
+      let pageContent;
+
+      if (page === "project") {
+          pageContent =
+              <div className={classes.buttonDiv}>
+                  <Button variant="contained" className={classes.button} onClick={this.createHandle()}>Create New Project</Button>
+              </div>;
+      }
+      else {
+          pageContent = 
+          <div>
+              <MyAccount onPageChange={this.projectPageChange}/>
+          </div>
+      }
+      return (
+      <div >
+              <Header onPageChange={this.accountPageChange}/>
+        <div className={classes.root}>
+        {pageContent}
+
 
         {this.state.projects && this.state.projects.length > 0 ?
-          <aside>
+            <aside>
             <div> 
-              {
+                {
                 this.state.projects.map((f,i) => {
-                  return (
+                    return (
                     <div key={f._id}>
-                      <h2>{f.name}</h2>
-                      <div className={classes.dropzoneDiv}>
+                        <h2>{f.name}</h2>
+                        <div className={classes.dropzoneDiv}>
                         {
                             f.slides.map((f, i) => <Thumbnail key={i} src={f} />)
                         }
-                      </div>
+                        </div>
                     </div>
                     
-                  )
+                    )
                 })
-              }
+                }
             
             </div>
             
-          </aside>
-          : <div></div>
+            </aside>
+            : <div></div>
         }
 
-      </div>
+        </div>
+    </div>
     );
   }
 }

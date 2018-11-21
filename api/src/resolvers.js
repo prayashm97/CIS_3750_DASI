@@ -3,6 +3,15 @@ const { User, Screen } = require('./model');
 
 const resolvers = {
   Query: {
+    async getScreen(root, {
+      _id,
+    }) {
+      try {
+        return await Screen.findById(_id);
+      } catch (error) {
+        return error;
+      }
+    },
     allScreensByUser(root, { user }) {
       return Screen.find({ doneBy: user });
     },
@@ -44,27 +53,24 @@ const resolvers = {
     },
 
     async removeScreen(root, {
-      input,
+      _id,
     }) {
       try {
-        await Screen.deleteOne(input);
-        return true;
+        return await Screen.findOneAndRemove({ _id });
       } catch (e) {
-        return false;
+        return e;
       }
     },
 
     async updateScreen(root, {
+      _id,
       input,
     }) {
       try {
-        return await Screen.findOneAndUpdate({ _id: input._id }, {
-          $set:
-        { name: input.name, timing: input.timing, slides: input.slides },
-        }, { new: true }, (err) => {
-          if (err) {
-            throw err;
-          }
+        return await Screen.findOneAndUpdate({
+          _id,
+        }, input, {
+          new: true,
         });
       } catch (err) {
         return err;

@@ -17,10 +17,6 @@ const typeDefs = `
     timing: Int
   }
 
-  type Slide {
-    src: String
-  }
-
   input ScreenInput {
     name: String!
     slides: [String]
@@ -29,7 +25,6 @@ const typeDefs = `
   }
 
   input ScreenDetailsForUpdate {
-    _id: ID!
     name: String
     slides: [String]
     timing: Int
@@ -40,15 +35,11 @@ const typeDefs = `
     email: String!
   }
 
-  input ScreenDetails {
-    _id: ID!
-  }
-
   type Mutation {
     createScreen(input: ScreenInput) : Screen
     createUser(input: UserInput) : User
-    removeScreen(input: ScreenDetails) : Boolean
-    updateScreen(input: ScreenDetailsForUpdate) : Screen
+    removeScreen(_id: ID!) : Screen
+    updateScreen(_id: ID!, input: ScreenDetailsForUpdate): Screen    
   }
 
   type Query {
@@ -58,7 +49,7 @@ const typeDefs = `
     hello: String
     allScreensByUser(user: String!): [Screen]
     allScreens: [Screen]
-
+    getScreen(_id: ID!): Screen
   }
 `;
 

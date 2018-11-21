@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Upload from '../components/Upload';
 import Thumbnail from '../components/Thumbnail';
-
 const styles = theme => ({
   root: {
     paddingRight: '15px',
@@ -22,6 +20,7 @@ const styles = theme => ({
   dropzoneDiv: {
     padding:'15px', display: 'flex', justifyContent: 'center', alignItems: 'center'
   },
+
 });
 
 class HomePage extends Component {
@@ -128,10 +127,8 @@ class HomePage extends Component {
           </aside>
           : <div></div>
         }
-
       </div>
     );
   }
 }
-
 export default withStyles(styles)(HomePage);

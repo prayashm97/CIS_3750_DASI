@@ -28,6 +28,13 @@ const typeDefs = `
     timing: Int
   }
 
+  input ScreenDetailsForUpdate {
+    _id: ID!
+    name: String
+    slides: [String]
+    timing: Int
+  }
+
   input UserInput {
     username: String!
     email: String!
@@ -41,6 +48,7 @@ const typeDefs = `
     createScreen(input: ScreenInput) : Screen
     createUser(input: UserInput) : User
     removeScreen(input: ScreenDetails) : Boolean
+    updateScreen(input: ScreenDetailsForUpdate) : Screen
   }
 
   type Query {

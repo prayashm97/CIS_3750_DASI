@@ -53,6 +53,21 @@ const resolvers = {
       }
     },
 
+    async updateScreen(root, {
+      input,
+    }) {
+      try {
+       return await Screen.findOneAndUpdate({id: input.id}, {$set : 
+        {name: input.name, id: input.id, timing: input.timing, slides: input.slides}}, {new: true}, (err,doc) => {
+          if (err) {
+            throw new updateError;
+          }
+        }); 
+      } catch (updateError) {
+        return updateError;
+      }
+    },
+
   },
 };
 

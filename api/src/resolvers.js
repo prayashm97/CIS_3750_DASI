@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const { User, Screen } = require('./model');
 
 const resolvers = {
@@ -39,6 +40,34 @@ const resolvers = {
         return await User.create(input);
       } catch (error) {
         return error;
+      }
+    },
+
+    async removeScreen(root, {
+      input,
+    }) {
+      try {
+        await Screen.deleteOne(input);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    },
+
+    async updateScreen(root, {
+      input,
+    }) {
+      try {
+        return await Screen.findOneAndUpdate({ _id: input._id }, {
+          $set:
+        { name: input.name, timing: input.timing, slides: input.slides },
+        }, { new: true }, (err) => {
+          if (err) {
+            throw err;
+          }
+        });
+      } catch (err) {
+        return err;
       }
     },
 

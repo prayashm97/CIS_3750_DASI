@@ -1,4 +1,7 @@
 import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 
 import { auth } from '../firebase';
 
@@ -11,7 +14,13 @@ const INITIAL_STATE = {
     error: '',
 }
 
-export class SignUp extends React.Component {
+const style = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+});
+
+class SignUp extends React.Component {
 
     constructor(props) {
         super(props);
@@ -25,6 +34,7 @@ export class SignUp extends React.Component {
 
     cancelSignUp = (e) => {
         console.log("cancel Sign Up");
+        this.props.handleSignUp();
     }
 
     handleSignUp = (e) => {
@@ -57,23 +67,91 @@ export class SignUp extends React.Component {
             confirmPassword,
         } = this.state;
 
+        const {
+          classes
+        } = this.props;
+
         return <div style={styles.loginForm}>
-                    <div style={styles.title}>Sign up</div>
+                    <div>
+                      <h1 style={styles.title}>
+                        Sign Up
+                      </h1>
+                    </div>
                     <form onSubmit={this.handleSignUp}>
-                        <input style={styles.input} placeholder="First Name" type='text' value={fname} onChange={event => this.handleChange('fname', event.target.value)} />
-                        <input style={styles.input} placeholder="Last Name" type='text' value={lname} onChange={event => this.handleChange('lname', event.target.value)} />
-                        <input style={styles.input} placeholder="Email" type='text' value={email} onChange={event => this.handleChange('email', event.target.value)} />
-                        <input style={styles.input} placeholder="Password" type='password' value={password} onChange={event => this.handleChange('password', event.target.value)} />
-                        <input style={styles.input} placeholder="Confirm Password" type='password' value={confirmPassword} onChange={event => this.handleChange('confirmPassword', event.target.value)} />
-                        <div style={styles.loginRow}>
-                            <button style={styles.cancel} type="button" onClick={this.cancelSignUp}>Cancel</button>
-                            <button style={styles.submit} type="submit">Sign up</button>
-                        </div>
+                    <TextField
+                      id="fname"
+                      label="First Name"
+                      value={fname}
+                      onChange={event => this.handleChange('fname', event.target.value)}
+                      type="text"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      fullWidth
+                      margin="normal"
+                    />
+                    <TextField
+                      id="lname"
+                      label="Last Name"
+                      value={lname}
+                      onChange={event => this.handleChange('lname', event.target.value)}
+                      type="text"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      fullWidth
+                      margin="normal"
+                    />
+                    <TextField
+                      id="email"
+                      label="Email"
+                      value={email}
+                      onChange={event => this.handleChange('email', event.target.value)}
+                      type="email"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      fullWidth
+                      margin="normal"
+                    />
+                    <TextField
+                      id="password"
+                      label="Password"
+                      value={password}
+                      onChange={event => this.handleChange('password', event.target.value)}
+                      type="password"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      fullWidth
+                      margin="normal"
+                    />
+                    <TextField
+                      id="confirmPassword"
+                      label="Confirm Password"
+                      value={confirmPassword}
+                      onChange={event => this.handleChange('confirmPassword', event.target.value)}
+                      type="password"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      fullWidth
+                      margin="normal"
+                    />
+                      <div style={styles.loginRow}>
+                        <Button className={classes.button} onClick={this.cancelSignUp}>Cancel</Button>
+                        <Button variant="contained" type="submit" className={classes.button}>
+                          Sign Up
+                        </Button>
+                      </div>
                     </form>
                     
                 </div>
     }
 }
+
+export default withStyles(style)(SignUp);
+
 
 const styles = {
     cancel: {
@@ -105,10 +183,12 @@ const styles = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: '20px'
+        marginBottom: '20px',
+        marginTop: '20px'
     },
     title: {
-        fontSize: '1.5rem',
-        marginBottom: '20px',
+      fontSize: '3em',
+      marginBottom: '0.25em',
+      fontWeight: '200',
     },
 }

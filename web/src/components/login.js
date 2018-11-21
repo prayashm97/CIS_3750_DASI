@@ -1,5 +1,9 @@
 import React from "react";
-import { SignUp } from './signUp';
+import SignUp from './signUp';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 import { auth } from '../firebase';
 
@@ -10,7 +14,14 @@ const INITIAL_STATE = {
     signUp: false,
 };
 
-export class Login extends React.Component {
+
+const style = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+});
+
+class Login extends React.Component {
     constructor(props) {
         super(props);
 
@@ -28,7 +39,8 @@ export class Login extends React.Component {
         } = this.state;
 
         auth.doSignInWithEmailAndPassword(email, password)
-            .then(() => {
+            .then((c) => {
+                console.log(c);
                 this.setState({ ...INITIAL_STATE });
             })
             .catch(error => {
@@ -48,11 +60,13 @@ export class Login extends React.Component {
             password,
             signUp,
         } = this.state;
-
+        const {
+          classes
+      } = this.props;
         return (
             <div style={styles.loginContainer}>
                 <div style={styles.loginLeftPanel}>
-                    <img style={styles.logo} alt="DASI Team Logo" />
+                    <img src="https://s3.amazonaws.com/cis3750dasi/DASI_logo.png" alt="DASI Team Logo" />
                 </div>
                 <div style={styles.seperator} />
                 <div style={styles.loginRightPanel}>
@@ -61,14 +75,44 @@ export class Login extends React.Component {
                             <SignUp handleSignUp={this.handleSignUp} />
                             :
                             <form onSubmit={this.handleLogin} style={styles.loginForm}>
-                                <div style={styles.title}>Login</div>
-                                <input style={styles.input} placeholder="Email" type='text' value={email} onChange={event => this.handleChange('email', event.target.value)} />
-                                <input style={styles.input} placeholder="password" type='password' value={password} onChange={event => this.handleChange('password', event.target.value)} />
-                                <div style={styles.loginRow}>
-                                    <div style={styles.forgot}>Forgot Password</div>
-                                    <button style={styles.submit} type="submit">Sign In</button>
+                                <div>
+                                <Typography component="h2" variant="h2" gutterBottom>
+                                  Login
+                                </Typography>
                                 </div>
-                                <button style={styles.signUp} type="reset" onClick={this.handleSignUp}>Sign Up</button>
+                                <TextField
+                                  id="email"
+                                  label="Email"
+                                  value={email}
+                                  onChange={event => this.handleChange('email', event.target.value)}
+                                  type="email"
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                  fullWidth
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="password"
+                                  label="Password"
+                                  value={password}
+                                  onChange={event => this.handleChange('password', event.target.value)}
+                                  type="password"
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                  fullWidth
+                                  margin="normal"
+                                />
+                                <div style={styles.loginRow}>
+                                  <Button className={classes.button}>Forgot Password</Button>
+                                  <Button variant="contained" type="submit" className={classes.button}>
+                                    Sign In
+                                  </Button>
+                                </div>
+                                <Button fullWidth variant="contained" type="reset" className={classes.button} onClick={this.handleSignUp}>
+                                  Sign Up
+                                </Button>
                             </form>
                     }
 
@@ -77,6 +121,9 @@ export class Login extends React.Component {
         )
     }
 }
+
+export default withStyles(style)(Login);
+
 
 const styles = {
     loginContainer: {
@@ -115,8 +162,9 @@ const styles = {
         width: '300px',
     },
     title: {
-        fontSize: '1.5rem',
-        marginBottom: '20px',
+      fontSize: '3em',
+      marginBottom: '0.25em',
+      fontWeight: '200',
     },
     input: {
         width: '100%',
@@ -127,7 +175,8 @@ const styles = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: '20px'
+        marginBottom: '20px',
+        marginTop: '20px'
     },
     forgot: {
         fontSize: '0.7rem',

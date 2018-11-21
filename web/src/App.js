@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Login } from "../src/components/login";
+import Login from "../src/components/login";
 import HomePage from "./HomePage";
 
 import { firebase } from './firebase';

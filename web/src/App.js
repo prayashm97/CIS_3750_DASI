@@ -19,6 +19,13 @@ class App extends Component {
   handleLogin = (email, password) => {
     this.setState({login: "yes"});
   }
+  
+  handleLogout = () => {
+	this.setState({
+		authUser: null,
+		login: "no"
+	})
+  }
 
   componentDidMount() {
     firebase.auth.onAuthStateChanged(authUser => {
@@ -34,8 +41,9 @@ class App extends Component {
 
     if (authUser === null) {
       renderContent = <Login handleLogin={this.handleLogin}/>
+	  //renderContent = <HomePage />
     } else if (authUser) {
-      renderContent = <HomePage />
+      renderContent = <HomePage handleLogout={this.handleLogout}/>
     } else {
       renderContent = <div>
         Something went wrong, you shouldn't see this.

@@ -109,6 +109,10 @@ class HomePage extends Component {
     accountPageChange = () => {
         this.setState({ page: "account" });
     }
+	
+	/*handleLogout = () => {
+		this.handleLogout();
+	}*/
 
   render() {
       const { classes } = this.props;
@@ -130,7 +134,7 @@ class HomePage extends Component {
       }
       return (
       <div >
-              <Header onPageChange={this.accountPageChange}/>
+              <Header onPageChange={this.accountPageChange} onLogout={this.handleLogout}/>
         <div className={classes.root}>
         {pageContent}
 

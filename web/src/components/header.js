@@ -19,6 +19,10 @@ const style = {
     grow: {
         flexGrow: 1,
     },
+	short: {
+		flexGrow: 1,
+		maxWidth: 50,
+	},
     menuButton: {
         marginLeft: -12,
         marginRight: 20,
@@ -33,6 +37,7 @@ class Header extends React.Component {
             anchorEl: null,
         };
         this.handleMyAccount = this.handleMyAccount.bind(this);
+		this.handleSignOut = this.handleSignOut.bind(this);
     }
 
     handleChange = event => {
@@ -47,8 +52,9 @@ class Header extends React.Component {
         this.setState({ anchorEl: null });
     };
 
-    handleSignOut = () => {
+    handleSignOut = (e) => {
         //sign out
+		this.props.onLogout(e.target.value);
         this.handleClose();
     };
 
@@ -56,6 +62,10 @@ class Header extends React.Component {
         this.props.onPageChange(e.target.value);
         this.handleClose();
     };
+	
+	handleHome = (e) => {
+		this.props.onPageChange(e.target.value);
+	}
 
     render() {
         const { classes } = this.props;
@@ -66,8 +76,11 @@ class Header extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <Typography variant="h6" color="inherit" className={classes.grow}>
+                        <Typography variant="h6" color="inherit" className={classes.short} onClick={this.handleHome}>
                             DASI
+                        </Typography>
+						<Typography variant="h6" color="inherit" className={classes.grow} onClick={this.handleHome}>
+                            
                         </Typography>
                             <div>
                                 <IconButton

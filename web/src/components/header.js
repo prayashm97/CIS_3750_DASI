@@ -11,6 +11,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 //import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { auth } from '../firebase';
 
 const style = {
     root: {
@@ -21,7 +22,8 @@ const style = {
     },
 	short: {
 		flexGrow: 1,
-		maxWidth: 50,
+        maxWidth: 50,
+        cursor: 'pointer',
 	},
     menuButton: {
         marginLeft: -12,
@@ -54,7 +56,8 @@ class Header extends React.Component {
 
     handleSignOut = () => {
         //sign out
-		this.props.onLogout();
+        auth.doSignOut();
+		//this.props.onLogout();
         this.handleClose();
     };
 

@@ -42,7 +42,7 @@ class HomePage extends Component {
     }
 
       this.handlePageChange = this.handlePageChange.bind(this);
-      this.handleLogout = this.handleLogout.bind(this);
+      //this.handleLogout = this.handleLogout.bind(this);
 
   }
 
@@ -112,9 +112,9 @@ class HomePage extends Component {
     this.setState({page: "homepage"})
   }
 	
-	handleLogout = () => {
-		this.props.onLogout();
-	}
+	//handleLogout = () => {
+	//	this.props.onLogout();
+	//}
 
   render() {
       const { classes } = this.props;

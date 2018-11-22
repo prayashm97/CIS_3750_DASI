@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Upload from '../components/Upload';
+//import Upload from '../components/Upload';
 import Thumbnail from '../components/Thumbnail';
 import Header from '../components/header';
 import MyAccount from '../components/myAccount';
@@ -39,7 +39,7 @@ class HomePage extends Component {
     }
 
       this.handlePageChange = this.handlePageChange.bind(this);
-      this.handleLogout = this.handleLogout.bind(this);
+      //this.handleLogout = this.handleLogout.bind(this);
 
   }
 
@@ -107,9 +107,9 @@ class HomePage extends Component {
         this.setState({ page });
     }
 	
-	handleLogout = () => {
-		this.props.onLogout();
-	}
+	//handleLogout = () => {
+	//	this.props.onLogout();
+	//}
 
   render() {
       const { classes } = this.props;

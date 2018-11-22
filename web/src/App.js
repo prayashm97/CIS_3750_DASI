@@ -3,7 +3,6 @@ import Login from "../src/components/login";
 import HomePage from "./HomePage";
 
 import { firebase } from './firebase';
-import { auth } from '../src/firebase';
 // import logo from './logo.svg';
 
 class App extends Component {
@@ -19,14 +18,6 @@ class App extends Component {
 
   handleLogin = (email, password) => {
        this.setState({login: "yes"});
-  }
-  
-  handleLogout = () => {
-      this.setState({
-          authUser: null,
-          login: "no",
-      });
-      auth.doSignOut();
   }
 
     componentDidMount() {

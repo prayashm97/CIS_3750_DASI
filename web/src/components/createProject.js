@@ -18,7 +18,7 @@ export class CreateProject extends React.Component {
         this.state = {
             currProject: {
                 _id: "",
-                timing: "",
+                timing: 3,
                 slides: [],
                 name: "",
             }
@@ -60,22 +60,29 @@ export class CreateProject extends React.Component {
 
         console.log(project);
 
+        const query = JSON.stringify({
+          query: `mutation {
+              createScreen(input: { 
+                name: "${project.name}",
+                slides: ${JSON.stringify(project.slides)}, 
+                timing: ${project.timing},
+                doneBy: "5bec460d590441347c352dce"}) {
+              _id name doneBy { _id } slides timing
+            }
+          }
+          `
+        });
+
+
+        console.log(
+          query
+        )
         //If it is a new project
         if (project._id === "") {
             fetch(`http://localhost:3001/graphql`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ mutation: `{ createScreen(input: {
-                name: "${project.name}", 
-                slides: ${project.slides}, 
-                timing: ${project.timing},
-                doneBy:"${`5bec460d590441347c352dce`}"}) {
-                _id
-                name
-                doneBy {_id}
-                slides
-                timing
-                } }` }),
+            body: query,
             })
             .then(res => res.json())
             .then(({data})=> {

@@ -52,19 +52,19 @@ class Header extends React.Component {
         this.setState({ anchorEl: null });
     };
 
-    handleSignOut = (e) => {
+    handleSignOut = () => {
         //sign out
-		this.props.onLogout(e.target.value);
+		this.props.onLogout();
         this.handleClose();
     };
 
-    handleMyAccount = (e) => {
-        this.props.onPageChange(e.target.value);
+    handleMyAccount = () => {
+        this.props.onPageChange("account");
         this.handleClose();
     };
 	
 	handleHome = (e) => {
-		this.props.onPageChange(e.target.value);
+		this.props.onPageChange("project");
 	}
 
     render() {

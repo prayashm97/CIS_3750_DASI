@@ -38,8 +38,9 @@ class HomePage extends Component {
       // authUser: null,
     }
 
-      this.projectPageChange = this.projectPageChange.bind(this);
-      this.accountPageChange = this.accountPageChange.bind(this);
+      this.handlePageChange = this.handlePageChange.bind(this);
+      this.handleLogout = this.handleLogout.bind(this);
+
   }
 
   componentDidMount() {
@@ -102,17 +103,13 @@ class HomePage extends Component {
     console.log("createHandle");
   }
 
-    projectPageChange = () => {
-        this.setState({ page: "project" });
-    }
-
-    accountPageChange = () => {
-        this.setState({ page: "account" });
+    handlePageChange = (page) => {
+        this.setState({ page });
     }
 	
-	/*handleLogout = () => {
-		this.handleLogout();
-	}*/
+	handleLogout = () => {
+		this.props.onLogout();
+	}
 
   render() {
       const { classes } = this.props;
@@ -121,7 +118,7 @@ class HomePage extends Component {
       let pageContent;
 
       if (page === "project") {
-          pageContent =
+          pageContent = 
               <div className={classes.buttonDiv}>
                   <Button variant="contained" className={classes.button} onClick={this.createHandle()}>Create New Project</Button>
               </div>;
@@ -129,17 +126,17 @@ class HomePage extends Component {
       else {
           pageContent = 
           <div>
-              <MyAccount onPageChange={this.projectPageChange}/>
+              <MyAccount onPageChange={this.handlePageChange}/>
           </div>
       }
       return (
       <div >
-              <Header onPageChange={this.accountPageChange} onLogout={this.handleLogout}/>
+              <Header onPageChange={this.handlePageChange} onLogout={this.handleLogout}/>
         <div className={classes.root}>
         {pageContent}
 
 
-        {this.state.projects && this.state.projects.length > 0 ?
+        {this.state.projects && page === "project" && this.state.projects.length > 0 ?
             <aside>
             <div> 
                 {

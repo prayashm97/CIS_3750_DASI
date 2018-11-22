@@ -50,7 +50,7 @@ class MyAccount extends React.Component {
     }
 
     cancelChanges = (e) => {
-        this.props.onPageChange(e.target.value);
+        this.props.onPageChange("project");
         console.log("cancel Changes");
         
     }
@@ -60,7 +60,7 @@ class MyAccount extends React.Component {
     }
 
     handleSaveChanges = (e) => {
-        this.props.onPageChange(e.target.value);
+        this.props.onPageChange("project");
         e.preventDefault();
     }
 

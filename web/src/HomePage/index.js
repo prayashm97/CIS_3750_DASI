@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Thumbnail from '../components/Thumbnail';
+import Header from '../components/header';
+import MyAccount from '../components/myAccount';
+
 const styles = theme => ({
   root: {
     paddingRight: '15px',
@@ -30,9 +33,14 @@ class HomePage extends Component {
 
     this.state = {
       loading: true,
-      projects: []
+      projects: [],
+      page: "project"
       // authUser: null,
     }
+
+      this.handlePageChange = this.handlePageChange.bind(this);
+      this.handleLogout = this.handleLogout.bind(this);
+
   }
 
   componentDidMount() {
@@ -95,39 +103,66 @@ class HomePage extends Component {
     console.log("createHandle");
   }
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className={classes.root}>
-        <div className={classes.buttonDiv}>
-          <Button variant="contained" className={classes.button} onClick={this.createHandle()}>Create New Project</Button>
-        </div>
+    handlePageChange = (page) => {
+        this.setState({ page });
+    }
+	
+	handleLogout = () => {
+		this.props.onLogout();
+	}
 
-        {this.state.projects && this.state.projects.length > 0 ?
-          <aside>
+  render() {
+      const { classes } = this.props;
+      const page = this.state.page;
+
+      let pageContent;
+
+      if (page === "project") {
+          pageContent = 
+              <div className={classes.buttonDiv}>
+                  <Button variant="contained" className={classes.button} onClick={this.createHandle()}>Create New Project</Button>
+              </div>;
+      }
+      else {
+          pageContent = 
+          <div>
+              <MyAccount onPageChange={this.handlePageChange}/>
+          </div>
+      }
+      return (
+      <div >
+              <Header onPageChange={this.handlePageChange} onLogout={this.handleLogout}/>
+        <div className={classes.root}>
+        {pageContent}
+
+
+        {this.state.projects && page === "project" && this.state.projects.length > 0 ?
+            <aside>
             <div> 
-              {
+                {
                 this.state.projects.map((f,i) => {
-                  return (
+                    return (
                     <div key={f._id}>
-                      <h2>{f.name}</h2>
-                      <div className={classes.dropzoneDiv}>
+                        <h2>{f.name}</h2>
+                        <div className={classes.dropzoneDiv}>
                         {
                             f.slides.map((f, i) => <Thumbnail key={i} src={f} />)
                         }
-                      </div>
+                        </div>
                     </div>
                     
-                  )
+                    )
                 })
-              }
+                }
             
             </div>
             
-          </aside>
-          : <div></div>
+            </aside>
+            : <div></div>
         }
-      </div>
+        </div>
+    </div>
+
     );
   }
 }

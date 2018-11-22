@@ -3,6 +3,7 @@ import Login from "../src/components/login";
 import HomePage from "./HomePage";
 
 import { firebase } from './firebase';
+import { auth } from '../src/firebase';
 // import logo from './logo.svg';
 
 class App extends Component {
@@ -17,10 +18,18 @@ class App extends Component {
   }
 
   handleLogin = (email, password) => {
-    this.setState({login: "yes"});
+       this.setState({login: "yes"});
+  }
+  
+  handleLogout = () => {
+      this.setState({
+          authUser: null,
+          login: "no",
+      });
+      auth.doSignOut();
   }
 
-  componentDidMount() {
+    componentDidMount() {
     firebase.auth.onAuthStateChanged(authUser => {
       authUser
         ? this.setState({ authUser })
@@ -32,10 +41,10 @@ class App extends Component {
     const { authUser } = this.state;
     let renderContent;
 
-    if (authUser === null) {
-      renderContent = <Login handleLogin={this.handleLogin}/>
+    if (authUser == null) {
+        renderContent = <Login handleLogin={this.handleLogin}/>
     } else if (authUser) {
-      renderContent = <HomePage />
+      renderContent = <HomePage onLogout={this.handleLogout}/>
     } else {
       renderContent = <div>
         Something went wrong, you shouldn't see this.

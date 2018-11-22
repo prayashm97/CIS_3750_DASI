@@ -7,7 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import CloudUpload from '@material-ui/icons/CloudUpload';
-import Thumbnail from './Thumbnail';
+// import Thumbnail from './Thumbnail';
 
 import { withStyles } from '@material-ui/core/styles';
 

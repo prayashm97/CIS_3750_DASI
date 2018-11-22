@@ -64,7 +64,7 @@ export class CreateProject extends React.Component {
           query: `mutation {
               createScreen(input: { 
                 name: "${project.name}",
-                slides: ${JSON.stringify(project.slides)}, 
+                slides: ${JSON.stringify(project.slides)},
                 timing: ${project.timing},
                 doneBy: "5bec460d590441347c352dce"}) {
               _id name doneBy { _id } slides timing

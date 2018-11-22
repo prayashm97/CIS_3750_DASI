@@ -1,7 +1,17 @@
+/* eslint-disable no-underscore-dangle */
 const { User, Screen } = require('./model');
 
 const resolvers = {
   Query: {
+    async getScreen(root, {
+      _id,
+    }) {
+      try {
+        return await Screen.findById(_id);
+      } catch (error) {
+        return error;
+      }
+    },
     allScreensByUser(root, { user }) {
       return Screen.find({ doneBy: user });
     },
@@ -43,13 +53,27 @@ const resolvers = {
     },
 
     async removeScreen(root, {
+      _id,
+    }) {
+      try {
+        return await Screen.findOneAndRemove({ _id });
+      } catch (e) {
+        return e;
+      }
+    },
+
+    async updateScreen(root, {
+      _id,
       input,
     }) {
       try {
-        await Screen.deleteOne(input);
-        return true;
-      } catch (e) {
-        return false;
+        return await Screen.findOneAndUpdate({
+          _id,
+        }, input, {
+          new: true,
+        });
+      } catch (err) {
+        return err;
       }
     },
 

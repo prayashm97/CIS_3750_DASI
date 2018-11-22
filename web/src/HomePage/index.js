@@ -24,6 +24,7 @@ const styles = theme => ({
   dropzoneDiv: {
     padding:'15px', display: 'flex', justifyContent: 'center', alignItems: 'center'
   },
+
 });
 
 class HomePage extends Component {
@@ -69,8 +70,8 @@ class HomePage extends Component {
   /*
   Example request for createScreen
   createScreen(input: {
-  name: "testScreen", 
-  slides: ["https://www.telegraph.co.uk/content/dam/Pets/spark/royal-canin/happy-puppy.jpg?imwidth=450", "https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4OC85MTEvb3JpZ2luYWwvZ29sZGVuLXJldHJpZXZlci1wdXBweS5qcGVn"], 
+  name: "testScreen",
+  slides: ["https://www.telegraph.co.uk/content/dam/Pets/spark/royal-canin/happy-puppy.jpg?imwidth=450", "https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4OC85MTEvb3JpZ2luYWwvZ29sZGVuLXJldHJpZXZlci1wdXBweS5qcGVn"],
   doneBy:"5bec460d590441347c352dce"}) {
     _id
     name
@@ -78,15 +79,15 @@ class HomePage extends Component {
     slides
     timing
   }
-  
+
   */
   createHandle = () => {
     // fetch(`http://localhost:3001/graphql`, {
     //   method: 'POST',
     //   headers: { 'Content-Type': 'application/json' },
     //   body: JSON.stringify({ mutation: `{ createScreen(input: {
-    //     name: "${name}", 
-    //     slides: ${should be array of strings}, 
+    //     name: "${name}",
+    //     slides: ${should be array of strings},
     //     // put timing here if you want, it defaults to 3 seconds
     //     doneBy:"${leave this as `5bec460d590441347c352dce`}"}) {
     //       _id
@@ -106,7 +107,7 @@ class HomePage extends Component {
     handlePageChange = (page) => {
         this.setState({ page });
     }
-	
+
 	//handleLogout = () => {
 	//	this.props.onLogout();
 	//}
@@ -118,13 +119,13 @@ class HomePage extends Component {
       let pageContent;
 
       if (page === "project") {
-          pageContent = 
+          pageContent =
               <div className={classes.buttonDiv}>
                   <Button variant="contained" className={classes.button} onClick={this.createHandle()}>Create New Project</Button>
               </div>;
       }
       else {
-          pageContent = 
+          pageContent =
           <div>
               <MyAccount onPageChange={this.handlePageChange}/>
           </div>
@@ -138,7 +139,7 @@ class HomePage extends Component {
 
         {this.state.projects && page === "project" && this.state.projects.length > 0 ?
             <aside>
-            <div> 
+            <div>
                 {
                 this.state.projects.map((f,i) => {
                     return (
@@ -150,21 +151,20 @@ class HomePage extends Component {
                         }
                         </div>
                     </div>
-                    
+
                     )
                 })
                 }
-            
+
             </div>
-            
+
             </aside>
             : <div></div>
         }
-
         </div>
     </div>
+
     );
   }
 }
-
 export default withStyles(styles)(HomePage);

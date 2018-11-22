@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Thumbnail from '../components/Thumbnail';
+import { CreateProject } from '../components/createProject';
+
 const styles = theme => ({
   root: {
     paddingRight: '15px',
@@ -30,16 +32,13 @@ class HomePage extends Component {
 
     this.state = {
       loading: true,
-      projects: []
+      projects: [],
+      mode: "home",
       // authUser: null,
     }
   }
 
   componentDidMount() {
-    this.setState({
-      loading: true,
-      projects: []
-    });
     fetch(`http://localhost:3001/graphql`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -48,12 +47,11 @@ class HomePage extends Component {
     .then(res => res.json())
     .then(({data})=> {
       console.log(data, this.state.projects);
-      // const temp = images.files;
       this.setState({
         projects: data.allScreens,
         loading: false,
       }, () => {
-        console.log(this.state.projects)
+        console.log(this.state.projects);
       })
     })
   }
@@ -61,8 +59,9 @@ class HomePage extends Component {
   /*
   Example request for createScreen
   createScreen(input: {
-  name: "testScreen", 
-  slides: ["https://www.telegraph.co.uk/content/dam/Pets/spark/royal-canin/happy-puppy.jpg?imwidth=450", "https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4OC85MTEvb3JpZ2luYWwvZ29sZGVuLXJldHJpZXZlci1wdXBweS5qcGVn"], 
+  name: "testScreen",
+  timing: "5"
+  slides: ["https://www.telegraph.co.uk/content/dam/Pets/spark/royal-canin/happy-puppy.jpg?imwidth=450", "https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4OC85MTEvb3JpZ2luYWwvZ29sZGVuLXJldHJpZXZlci1wdXBweS5qcGVn"],
   doneBy:"5bec460d590441347c352dce"}) {
     _id
     name
@@ -70,15 +69,15 @@ class HomePage extends Component {
     slides
     timing
   }
-  
+
   */
   createHandle = () => {
     // fetch(`http://localhost:3001/graphql`, {
     //   method: 'POST',
     //   headers: { 'Content-Type': 'application/json' },
     //   body: JSON.stringify({ mutation: `{ createScreen(input: {
-    //     name: "${name}", 
-    //     slides: ${should be array of strings}, 
+    //     name: "${name}",
+    //     slides: ${should be array of strings},
     //     // put timing here if you want, it defaults to 3 seconds
     //     doneBy:"${leave this as `5bec460d590441347c352dce`}"}) {
     //       _id
@@ -92,43 +91,47 @@ class HomePage extends Component {
     // .then(({data})=> {
     //   console.log(data)
     // })
-    console.log("createHandle");
+    this.setState({mode: "create"});
   }
 
   render() {
     const { classes } = this.props;
-    return (
-      <div className={classes.root}>
-        <div className={classes.buttonDiv}>
-          <Button variant="contained" className={classes.button} onClick={this.createHandle()}>Create New Project</Button>
-        </div>
+    const { mode } = this.state;
 
-        {this.state.projects && this.state.projects.length > 0 ?
-          <aside>
-            <div> 
-              {
-                this.state.projects.map((f,i) => {
-                  return (
-                    <div key={f._id}>
-                      <h2>{f.name}</h2>
-                      <div className={classes.dropzoneDiv}>
-                        {
-                            f.slides.map((f, i) => <Thumbnail key={i} src={f} />)
-                        }
+    if (mode === "create") {
+      return <CreateProject project={undefined} />
+    } else if (mode === "home") {
+      return (
+        <div className={classes.root}>
+          <div className={classes.buttonDiv}>
+            <Button variant="contained" className={classes.button} onClick={this.createHandle}>Create New Project</Button>
+          </div>
+
+          {this.state.projects && this.state.projects.length > 0 ?
+            <aside>
+              <div>
+                {
+                  this.state.projects.map((f,i) => {
+                    return (
+                      <div key={f._id}>
+                        <h2>{f.name}</h2>
+                        <div className={classes.dropzoneDiv}>
+                          {
+                              f.slides.map((f, i) => <Thumbnail key={i} src={f} />)
+                          }
+                        </div>
                       </div>
-                    </div>
-                    
-                  )
-                })
-              }
-            
-            </div>
-            
-          </aside>
-          : <div></div>
-        }
-      </div>
-    );
+                    )
+                  })
+                }
+
+              </div>
+            </aside>
+            : <div></div>
+          }
+        </div>
+      );
+    }
   }
 }
 export default withStyles(styles)(HomePage);

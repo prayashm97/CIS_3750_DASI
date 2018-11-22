@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import Icon from '@material-ui/core/Icon';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
-
-
 import CloudUpload from '@material-ui/icons/CloudUpload';
+import Thumbnail from './Thumbnail';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import Thumbnail from './Thumbnail';
 const UPLOAD_URL = `https://upload-hub.herokuapp.com`;
 
 const styles = theme => ({
@@ -20,14 +19,25 @@ const styles = theme => ({
   },
   icon: {
     fontSize: '50px'
+  },
+  uploadButton: {
+    display: "flex", justifyContent: "center", alignItems: "center",
+    height: "150px", width: "200px",
+    border: "1px solid #000",
+    cursor: "pointer",
   }
 });
 
 class Upload extends Component {
-  constructor() {
-    super()
-    this.state = { files: [], open: false, images: []}
+  constructor(props) {
+    super(props)
+    this.state = { 
+      files: [], 
+      open: false, 
+      images: []
+    }
   }
+
   handleClose = () => {
     this.setState({
       open: false,
@@ -39,6 +49,7 @@ class Upload extends Component {
       open: true,
     });
   };
+
   onDrop(files) {
     this.setState({
       files
@@ -47,8 +58,8 @@ class Upload extends Component {
     const files2 = Array.from(files)
     this.setState({ uploading: true })
 
+    //Builds the body for the POST call
     const formData = new FormData()
-
     files2.forEach((file, i) => {
       formData.append(i, file)
     })
@@ -61,6 +72,7 @@ class Upload extends Component {
     .then(images => {
       console.log(images);
       const temp = images.files;
+      this.props.addImage(images.files);
       this.setState({
         images: [...this.state.images, ...temp],
         uploading: false,
@@ -82,10 +94,7 @@ class Upload extends Component {
 
     return (
       <section>
-       
-        
-
-        <Dialog maxWidth={'sm'} fullWidth open={open} onClose={this.handleClose}>
+        <Dialog maxWidth={'xs'} fullWidth open={open} onClose={this.handleClose}>
           <DialogTitle>Upload Image</DialogTitle>
           <DialogContent>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -102,9 +111,7 @@ class Upload extends Component {
                   <div style={{ padding:'15px'}}>
                     <p>Drop Image to Upload</p>
                     <p>Or Click Here</p>
-
                   </div>
-
                 </Dropzone>
               </div>
             </div>
@@ -116,27 +123,11 @@ class Upload extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <Button variant="contained" color="secondary" onClick={this.handleClick}>
-          Upload Image Button
-        </Button>
-
-        {this.state.images.length > 0 ?
-    
-          <aside>
-            <div>
-            <h2>Uploaded images</h2>
-            <div className={classes.dropzoneDiv}>
-              {
-                  this.state.images.map((f, i) => <Thumbnail key={i} src={f} />)
-              }
-            </div>
-            </div>
-            
-          </aside>
-          : <div></div>
-        }
-       
-
+        <div className={classes.uploadButton} onClick={this.handleClick}>
+          <Icon className={classes.icon}>
+            add_circle
+          </Icon>
+        </div>
       </section>
     );
   }

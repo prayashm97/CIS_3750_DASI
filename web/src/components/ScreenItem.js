@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import Eye from '@material-ui/icons/RemoveRedEye';
+import Edit from '@material-ui/icons/Edit';
+import FileCopy from '@material-ui/icons/FileCopy';
+
 import Typography from '@material-ui/core/Typography';
 
 import Thumbnail from './Thumbnail';
@@ -23,7 +31,19 @@ const styles = theme => ({
     height: "150px", width: "200px",
     border: "1px solid #000",
     cursor: "pointer",
-  }
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+  iconSmall: {
+    fontSize: 20,
+  },
 });
 
 
@@ -57,8 +77,28 @@ class ScreenItem extends Component {
           item.slides.slice(0, 4).map((f, i) => <Thumbnail key={i} src={f} />)
         }
         </div>
-
       </CardContent>
+      <CardActions>
+        <Button fullWidth color="default" className={classes.button}>
+          <Eye className={classes.leftIcon} />
+          Preview
+        </Button>
+
+        <Button fullWidth color="default" className={classes.button}>
+          <Edit className={classes.leftIcon} />
+          Edit
+        </Button>
+
+        <Button fullWidth color="default" className={classes.button}>
+          <FileCopy className={classes.leftIcon} />
+          Duplicate
+        </Button>
+
+        <Button fullWidth color="default" className={classes.button}>
+          <DeleteIcon className={classes.leftIcon} />
+          Delete
+        </Button>
+      </CardActions>
     </Card>
     );
   }

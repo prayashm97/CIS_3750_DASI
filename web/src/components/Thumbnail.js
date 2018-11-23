@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 const cont = {
   backgroundColor: '#eee',
-  cursor: 'pointer',
   overflow: 'hidden',
   position: 'relative',
 };
@@ -20,6 +19,7 @@ const Thumbnail = ({src}) => {
         height={'180px'}
         alt={`${src} DASI`}
         width={'320px'}
+        cursor={"default"}
       />
     </div>
   );

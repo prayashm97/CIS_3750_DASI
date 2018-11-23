@@ -5,6 +5,7 @@ import Thumbnail from '../components/Thumbnail';
 import Header from '../components/header';
 import MyAccount from '../components/myAccount';
 import { CreateProject } from '../components/createProject';
+import ScreenItem from '../components/ScreenItem';
 
 const styles = theme => ({
   root: {
@@ -143,16 +144,17 @@ class HomePage extends Component {
             {pageContent}
             
             {this.state.projects && page === "homepage" && this.state.projects.length > 0 ?
-              <aside>
+              <aside style={{marginTop: '25px'}}>
                 <div>
                   {this.state.projects.map((f,i) => {
                         return (
                           <div key={f._id}>
-                              <h2>{f.name}</h2>
+                              <ScreenItem item={f} />
+                              {/* <h2>{f.name}</h2>
                               <div className={classes.dropzoneDiv}> {
                                   f.slides.map((f, i) => <Thumbnail key={i} src={f} />)
                               }
-                              </div>
+                              </div> */}
                           </div>
                   )})}
                 </div>

@@ -13,6 +13,7 @@ const styles = theme => ({
     marginRight: 'auto',
     marginLeft: 'auto',
     width: '80%',
+    marginTop: '50px',
   },
   button: {
     margin: theme.spacing.unit,
@@ -46,7 +47,7 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3001/graphql`, {
+    fetch(process.env.REACT_APP_GRAPHQL_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: '{ allScreens { _id name slides } }' }),
@@ -125,7 +126,12 @@ class HomePage extends Component {
           pageContent = <CreateProject handleQuit={this.handleQuitProject} project={undefined} />
       } else if (page === "homepage") {
           pageContent = (
-            <div onClick={this.createProject}>Create New Project</div>
+            <div className={classes.buttonDiv}>
+              <Button onClick={this.createProject} variant="contained" className={classes.button}>
+                Create New Project
+              </Button>
+            </div>
+            
           )
       } else if (page === "myAccount") {
           pageContent = <MyAccount onPageChange={this.handlePageChange}/>

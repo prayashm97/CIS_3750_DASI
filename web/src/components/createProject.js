@@ -79,7 +79,7 @@ export class CreateProject extends React.Component {
         )
         //If it is a new project
         if (project._id === "") {
-            fetch(`http://localhost:3001/graphql`, {
+            fetch(process.env.REACT_APP_GRAPHQL_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: query,
@@ -173,6 +173,7 @@ const styles = {
     pageContent: {
         width: "80%",
         height: "80%",
+        marginTop: "50px"
     },
     projectEditor: {
         position: "relative",

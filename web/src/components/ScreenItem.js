@@ -59,6 +59,41 @@ class ScreenItem extends Component {
   onMouseOut = () => this.setState({ shadow: 1 });
   toggleRaised = () => this.setState({raised:!this.state.raised});
 
+  previewClick = () => {
+    console.log("previewClick", this.props.item._id)
+  }
+
+  editClick = () => {
+    this.props.editPage(this.props.item);
+    console.log("editClick", this.props.item._id)
+  }
+
+  duplicateClick = () => {
+    console.log("duplicateClick", this.props.item._id)
+  }
+
+  deleteClick = () => {
+    console.log("deleteClick", this.props.item._id)
+    const query = JSON.stringify({
+      query: `mutation {
+        removeScreen(_id: "${this.props.item._id}") {
+          _id name doneBy { _id } slides timing
+        }
+      }
+      `
+    });
+    fetch(process.env.REACT_APP_GRAPHQL_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: query,
+    })
+    .then(res => res.json())
+    .then(({data})=> {
+    console.log(data);
+    this.props.refreshPage();
+    })
+  
+  }
 
   render() {
     const { item, classes } = this.props;
@@ -79,22 +114,22 @@ class ScreenItem extends Component {
         </div>
       </CardContent>
       <CardActions>
-        <Button fullWidth color="default" className={classes.button}>
+        <Button fullWidth color="default" className={classes.button} onClick={() => this.previewClick()}>
           <Eye className={classes.leftIcon} />
           Preview
         </Button>
 
-        <Button fullWidth color="default" className={classes.button}>
+        <Button fullWidth color="default" className={classes.button} onClick={() => this.editClick()}>
           <Edit className={classes.leftIcon} />
           Edit
         </Button>
 
-        <Button fullWidth color="default" className={classes.button}>
+        <Button fullWidth color="default" className={classes.button} onClick={() => this.duplicateClick()} >
           <FileCopy className={classes.leftIcon} />
           Duplicate
         </Button>
 
-        <Button fullWidth color="default" className={classes.button}>
+        <Button fullWidth color="default" className={classes.button} onClick={() => this.deleteClick()}>
           <DeleteIcon className={classes.leftIcon} />
           Delete
         </Button>

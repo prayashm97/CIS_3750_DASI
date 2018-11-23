@@ -32,6 +32,7 @@ export class CreateProject extends React.Component {
                     _id: this.props.project._id,
                     name: this.props.project.name,
                     slides: this.props.project.slides,
+                    timing: this.props.project.timing,
                 }
             })
         }
@@ -44,6 +45,7 @@ export class CreateProject extends React.Component {
                     _id: this.props.project._id,
                     name: this.props.project.name,
                     slides: this.props.project.slides,
+                    timing: this.props.project.timing,
                 }
             })
         }
@@ -87,6 +89,7 @@ export class CreateProject extends React.Component {
             .then(res => res.json())
             .then(({data})=> {
             console.log(data);
+            this.props.handleQuit();
             })
         } else {
             //call projectUpdate

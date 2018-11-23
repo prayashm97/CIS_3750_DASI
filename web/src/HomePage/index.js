@@ -47,10 +47,14 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
+    this.getScreens();
+  }
+
+  getScreens = () => {
     fetch(process.env.REACT_APP_GRAPHQL_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: '{ allScreens { _id name slides } }' }),
+      body: JSON.stringify({ query: '{ allScreens { _id name slides timing } }' }),
     })
     .then(res => res.json())
     .then(({data})=> {
@@ -104,12 +108,17 @@ class HomePage extends Component {
     this.setState({page: "project"});
   }
 
+  editProject = (project) => {
+    this.setState({page: "edit", project });
+  }
+
   handlePageChange = (page) => {
     this.setState({page: "myAccount"});
   }
 
   handleQuitProject = () => {
     this.setState({page: "homepage"})
+    this.getScreens();
   }
 	
 	handleLogout = () => {
@@ -135,6 +144,8 @@ class HomePage extends Component {
           )
       } else if (page === "myAccount") {
           pageContent = <MyAccount onPageChange={this.handleQuitProject}/>
+      } else if (page === "edit") {
+        pageContent = <CreateProject handleQuit={this.handleQuitProject} project={this.state.project} />
       }
 
       return (
@@ -149,7 +160,7 @@ class HomePage extends Component {
                   {this.state.projects.map((f,i) => {
                         return (
                           <div key={f._id}>
-                              <ScreenItem item={f} />
+                              <ScreenItem item={f} refreshPage={() => this.getScreens()} editPage={(item) => this.editProject(item)} />
                               {/* <h2>{f.name}</h2>
                               <div className={classes.dropzoneDiv}> {
                                   f.slides.map((f, i) => <Thumbnail key={i} src={f} />)

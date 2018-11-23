@@ -104,7 +104,7 @@ class HomePage extends Component {
   }
 
   handlePageChange = (page) => {
-      this.setState({ page });
+    this.setState({page: "myAccount"});
   }
 
   handleQuitProject = () => {
@@ -133,7 +133,7 @@ class HomePage extends Component {
             
           )
       } else if (page === "myAccount") {
-          pageContent = <MyAccount onPageChange={this.handlePageChange}/>
+          pageContent = <MyAccount onPageChange={this.handleQuitProject}/>
       }
 
       return (

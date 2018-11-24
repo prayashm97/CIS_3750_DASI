@@ -6,6 +6,7 @@ import Header from '../components/header';
 import MyAccount from '../components/myAccount';
 import { CreateProject } from '../components/createProject';
 import ScreenItem from '../components/ScreenItem';
+import Preview from '../components/Preview';
 
 const styles = theme => ({
   root: {
@@ -112,6 +113,10 @@ class HomePage extends Component {
     this.setState({page: "edit", project });
   }
 
+  previewProject = (project) => {
+    this.setState({page: "preview", project });
+  }
+
   handlePageChange = (page) => {
     this.setState({page: "myAccount"});
   }
@@ -146,11 +151,15 @@ class HomePage extends Component {
           pageContent = <MyAccount onPageChange={this.handleQuitProject}/>
       } else if (page === "edit") {
         pageContent = <CreateProject handleQuit={this.handleQuitProject} project={this.state.project} />
+      } else if (page === "preview") {
+        pageContent = <Preview project={this.state.project}/>
+
+        // pageContent = <CreateProject handleQuit={this.handleQuitProject} project={this.state.project} />
       }
 
       return (
         <div>
-          <Header onPageChange={this.handlePageChange} onLogout={this.handleLogout}/>
+          <Header onPageChangeHome={this.handleQuitProject} onPageChangeAccount={this.handlePageChange} onLogout={this.handleLogout}/>
           <div className={classes.root}>
             {pageContent}
             
@@ -160,7 +169,7 @@ class HomePage extends Component {
                   {this.state.projects.map((f,i) => {
                         return (
                           <div key={f._id}>
-                              <ScreenItem item={f} refreshPage={() => this.getScreens()} editPage={(item) => this.editProject(item)} />
+                              <ScreenItem item={f} refreshPage={() => this.getScreens()} editPage={(item) => this.editProject(item)} previewPage={(item) => this.previewProject(item)} />
                               {/* <h2>{f.name}</h2>
                               <div className={classes.dropzoneDiv}> {
                                   f.slides.map((f, i) => <Thumbnail key={i} src={f} />)

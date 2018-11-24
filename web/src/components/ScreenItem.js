@@ -61,6 +61,8 @@ class ScreenItem extends Component {
 
   previewClick = () => {
     console.log("previewClick", this.props.item._id)
+    this.props.previewPage(this.props.item);
+
   }
 
   editClick = () => {

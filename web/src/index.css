@@ -1,3 +1,16 @@
 div, html, body, head, input {
     box-sizing: border-box;
 }
+.image-gallery-content.fullscreen .image-gallery-slide img{
+  height: 100vh;
+  }
+  .image-gallery-slides {
+    text-align: center;
+    }
+    .image-gallery-slide {
+    background: #fff;
+    }
+    .image-gallery-slide img{
+    width: auto;
+    height: 800px;
+    }

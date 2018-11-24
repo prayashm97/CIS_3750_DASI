@@ -62,12 +62,12 @@ class Header extends React.Component {
     };
 
     handleMyAccount = () => {
-        this.props.onPageChange("account");
+        this.props.onPageChangeAccount();
         this.handleClose();
     };
 	
 	handleHome = (e) => {
-		this.props.onPageChange("project");
+		this.props.onPageChangeHome();
 	}
 
     render() {

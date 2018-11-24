@@ -21,7 +21,6 @@ class Preview extends Component {
       images: [],
       // authUser: null,
     }
-
   }
  
   componentDidMount() {
@@ -42,26 +41,16 @@ class Preview extends Component {
   openFullScreen = () => {
     this._imageGallery.fullScreen()
   };
+
+  onScreenChange = (event) => {
+    if (event === null) {
+      this.props.exitFullScreen();
+    }
+  }
   
   render() {
-    // this._imageGallery.fullScreen();
-    const images = [
-      {
-        original: 'http://lorempixel.com/1000/600/nature/1/',
-        thumbnail: 'http://lorempixel.com/250/150/nature/1/',
-      },
-      {
-        original: 'http://lorempixel.com/1000/600/nature/2/',
-        thumbnail: 'http://lorempixel.com/250/150/nature/2/'
-      },
-      {
-        original: 'http://lorempixel.com/1000/600/nature/3/',
-        thumbnail: 'http://lorempixel.com/250/150/nature/3/'
-      }
-    ]
- 
     return (
-      <ImageGallery ref={i => this._imageGallery = i} useBrowserFullscreen items={this.state.images} showNav={false} showThumbnails={false} showPlayButton={false} autoPlay={true} slideInterval={this.props.timing || 3000} />
+      <ImageGallery ref={i => this._imageGallery = i} onScreenChange={this.onScreenChange} useBrowserFullscreen items={this.state.images} showNav={false} showThumbnails={false} showPlayButton={false} autoPlay={true} slideInterval={this.props.timing || 3000} />
     );
   }
  

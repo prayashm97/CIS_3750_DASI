@@ -27,7 +27,6 @@ const styles = theme => ({
   dropzoneDiv: {
     padding:'15px', display: 'flex', justifyContent: 'center', alignItems: 'center'
   },
-
 });
 
 class HomePage extends Component {
@@ -39,12 +38,7 @@ class HomePage extends Component {
       loading: true,
       projects: [],
       page: "homepage",
-      // authUser: null,
     }
-
-      this.handlePageChange = this.handlePageChange.bind(this);
-      this.handleLogout = this.handleLogout.bind(this);
-
   }
 
   componentDidMount() {
@@ -70,41 +64,6 @@ class HomePage extends Component {
     })
   }
 
-  /*
-  Example request for createScreen
-  createScreen(input: {
-  name: "testScreen",
-  timing: "5"
-  slides: ["https://www.telegraph.co.uk/content/dam/Pets/spark/royal-canin/happy-puppy.jpg?imwidth=450", "https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4OC85MTEvb3JpZ2luYWwvZ29sZGVuLXJldHJpZXZlci1wdXBweS5qcGVn"],
-  doneBy:"5bec460d590441347c352dce"}) {
-    _id
-    name
-    doneBy {_id}
-    slides
-    timing
-  }
-
-    fetch(`http://localhost:3001/graphql`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mutation: `{ createScreen(input: {
-        name: "${name}",
-        slides: ${should be array of strings},
-        // put timing here if you want, it defaults to 3 seconds
-        doneBy:"${leave this as `5bec460d590441347c352dce`}"}) {
-          _id
-          name
-          doneBy {_id}
-          slides
-          timing
-        } }` }),
-    })
-    .then(res => res.json())
-    .then(({data})=> {
-      console.log(data)
-    })
-
-  */
   createProject = () => {
     this.setState({page: "project"});
   }
@@ -118,7 +77,7 @@ class HomePage extends Component {
   }
 
   handlePageChange = (page) => {
-    this.setState({page: "myAccount"});
+    this.setState({page: page});
   }
 
   handleQuitProject = () => {
@@ -132,54 +91,48 @@ class HomePage extends Component {
 
   render() {
       const { classes } = this.props;
-      const { page } = this.state;
+      const { page, project} = this.state;
 
       let pageContent = null;
 
       if (page === "project") {
-          pageContent = <CreateProject handleQuit={this.handleQuitProject} project={undefined} />
+          pageContent = <CreateProject handleQuit={this.handleQuitProject} project={project} />
       } else if (page === "homepage") {
           pageContent = (
-            <div className={classes.buttonDiv}>
-              <Button onClick={this.createProject} variant="contained" className={classes.button}>
-                Create New Project
-              </Button>
-            </div>
-            
+            <React.Fragment>
+              <div className={classes.buttonDiv}>
+                <Button onClick={this.createProject} variant="contained" className={classes.button}>
+                  Create New Project
+                </Button>
+              </div>
+              {this.state.projects && this.state.projects.length > 0 ?
+                <aside style={{marginTop: '25px'}}>
+                  <React.Fragment>
+                    {this.state.projects.map((project) => {
+                          return (
+                            <div key={project._id}>
+                                <ScreenItem item={project} refreshPage={() => this.getScreens()} editPage={(item) => this.editProject(item)} previewPage={(item) => this.previewProject(item)} />
+                            </div>
+                    )})}
+                  </React.Fragment>
+                </aside>
+              : <div></div>}
+            </React.Fragment>
           )
       } else if (page === "myAccount") {
           pageContent = <MyAccount onPageChange={this.handleQuitProject}/>
       } else if (page === "edit") {
         pageContent = <CreateProject handleQuit={this.handleQuitProject} project={this.state.project} />
       } else if (page === "preview") {
-        pageContent = <Preview project={this.state.project}/>
-
-        // pageContent = <CreateProject handleQuit={this.handleQuitProject} project={this.state.project} />
+        pageContent = <Preview exitFullScreen={this.handleQuitProject} project={this.state.project}/>
       }
 
       return (
         <div>
-          <Header onPageChangeHome={this.handleQuitProject} onPageChangeAccount={this.handlePageChange} onLogout={this.handleLogout}/>
+          <Header onPageChangeHome={this.handleQuitProject} onPageChangeAccount={() => this.handlePageChange("myAccount")} onLogout={this.handleLogout}/>
+          
           <div className={classes.root}>
             {pageContent}
-            
-            {this.state.projects && page === "homepage" && this.state.projects.length > 0 ?
-              <aside style={{marginTop: '25px'}}>
-                <div>
-                  {this.state.projects.map((f,i) => {
-                        return (
-                          <div key={f._id}>
-                              <ScreenItem item={f} refreshPage={() => this.getScreens()} editPage={(item) => this.editProject(item)} previewPage={(item) => this.previewProject(item)} />
-                              {/* <h2>{f.name}</h2>
-                              <div className={classes.dropzoneDiv}> {
-                                  f.slides.map((f, i) => <Thumbnail key={i} src={f} />)
-                              }
-                              </div> */}
-                          </div>
-                  )})}
-                </div>
-              </aside>
-            : <div></div>}
           </div>
         </div>
       );

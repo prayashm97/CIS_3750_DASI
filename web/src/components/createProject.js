@@ -165,6 +165,42 @@ export class CreateProject extends React.Component {
     }
 }
 
+  /*
+  Example request for createScreen
+  createScreen(input: {
+  name: "testScreen",
+  timing: "5"
+  slides: ["https://www.telegraph.co.uk/content/dam/Pets/spark/royal-canin/happy-puppy.jpg?imwidth=450", "https://img.purch.com/w/660/aHR0cDovL3d3dy5saXZlc2NpZW5jZS5jb20vaW1hZ2VzL2kvMDAwLzA4OC85MTEvb3JpZ2luYWwvZ29sZGVuLXJldHJpZXZlci1wdXBweS5qcGVn"],
+  doneBy:"5bec460d590441347c352dce"}) {
+    _id
+    name
+    doneBy {_id}
+    slides
+    timing
+  }
+
+    fetch(`http://localhost:3001/graphql`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mutation: `{ createScreen(input: {
+        name: "${name}",
+        slides: ${should be array of strings},
+        // put timing here if you want, it defaults to 3 seconds
+        doneBy:"${leave this as `5bec460d590441347c352dce`}"}) {
+          _id
+          name
+          doneBy {_id}
+          slides
+          timing
+        } }` }),
+    })
+    .then(res => res.json())
+    .then(({data})=> {
+      console.log(data)
+    })
+
+  */
+
 const styles = {
     createContainer: {
         position: "absolute",

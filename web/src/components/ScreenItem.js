@@ -34,15 +34,48 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
+    color: "#fff",
+    display: "inline-flex",
+    alignItems: "center",
   },
   leftIcon: {
     marginRight: theme.spacing.unit,
+    color: "#fff",
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
+    color: "#fff",
   },
   iconSmall: {
     fontSize: 20,
+  },
+  hover: {
+    position: "absolute",
+    top: 0, bottom: 0, right: 0, left: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: "4px",
+    opacity: "1",
+    transition: "all 0.5s ease-in-out",
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    color: "#fff",
+  },
+  noHover: {
+    position: "absolute",
+    top: 0, bottom: 0, right: 0, left: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    borderRadius: "4px",
+    opacity: "0",
+    transition: "all 0.5s ease-in-out",
+    display: "flex",
+    justifyContent: "space-around",
+    color: "#fff",
+    alignItems: "center",
+  },
+  slideContainer: {
+    position: "relative",
+    borderRadius: "4px",
   },
 });
 
@@ -51,18 +84,14 @@ class ScreenItem extends Component {
   constructor(props) {
     super(props)
     this.state = { 
-      raised: false
+      raised: false,
+      hover: false,
     }
   }
-
-  onMouseOver = () => this.setState({ shadow: 3 });
-  onMouseOut = () => this.setState({ shadow: 1 });
-  toggleRaised = () => this.setState({raised:!this.state.raised});
 
   previewClick = () => {
     console.log("previewClick", this.props.item._id)
     this.props.previewPage(this.props.item);
-
   }
 
   editClick = () => {
@@ -94,9 +123,46 @@ class ScreenItem extends Component {
     console.log(data);
     this.props.refreshPage();
     })
-  
   }
 
+  render() {
+    const { item, classes } = this.props;
+    const { hover } = this.state;
+
+    return (
+      <React.Fragment>
+        <Typography gutterBottom variant="h5" component="h3">
+          {item.name}
+        </Typography>
+        <div className={classes.slideContainer}>
+          <div className={classes.dropzoneDiv}> {
+            item.slides.slice(0, 4).map((slide, index) => <Thumbnail key={index} src={slide} />)
+          }
+          </div>
+          <div className={hover ? classes.hover : classes.noHover} onMouseLeave={() => {this.setState({hover: false})}} onMouseEnter={() => {this.setState({hover: true})}}>
+            <Button color="inherit" className={classes.button} onClick={() => this.previewClick()}>
+              <Eye className={classes.leftIcon} />
+              Preview
+            </Button>
+            <Button color="inherit" className={classes.button} onClick={() => this.editClick()}>
+              <Edit className={classes.leftIcon} />
+              Edit
+            </Button>
+            <Button color="inherit" className={classes.button} onClick={() => this.duplicateClick()} >
+              <FileCopy className={classes.leftIcon} />
+              Duplicate
+            </Button>
+            <Button color="inherit" className={classes.button} onClick={() => this.deleteClick()}>
+              <DeleteIcon className={classes.leftIcon} />
+              Delete
+            </Button>
+          </div>
+        </div>
+      </React.Fragment>
+    )
+  }
+
+  /*
   render() {
     const { item, classes } = this.props;
     return (
@@ -138,7 +204,7 @@ class ScreenItem extends Component {
       </CardActions>
     </Card>
     );
-  }
+  } */
 }
 
 export default withStyles(styles)(ScreenItem);

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Thumbnail from '../components/Thumbnail';
 import Header from '../components/header';
 import MyAccount from '../components/myAccount';
@@ -19,10 +18,6 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
-  },
-  buttonDiv: {
-    display: 'flex',
-    justifyContent:'flex-end',
   },
   dropzoneDiv: {
     padding:'15px', display: 'flex', justifyContent: 'center', alignItems: 'center'
@@ -100,11 +95,6 @@ class HomePage extends Component {
       } else if (page === "homepage") {
           pageContent = (
             <React.Fragment>
-              <div className={classes.buttonDiv}>
-                <Button onClick={this.createProject} variant="contained" className={classes.button}>
-                  Create New Project
-                </Button>
-              </div>
               {this.state.projects && this.state.projects.length > 0 ?
                 <aside style={{marginTop: '25px'}}>
                   <React.Fragment>
@@ -128,13 +118,13 @@ class HomePage extends Component {
       }
 
       return (
-        <div>
-          <Header onPageChangeHome={this.handleQuitProject} onPageChangeAccount={() => this.handlePageChange("myAccount")} onLogout={this.handleLogout}/>
-          
+        <React.Fragment>
+          <Header createProject={this.createProject} onPageChangeHome={this.handleQuitProject} onPageChangeAccount={() => this.handlePageChange("myAccount")} onLogout={this.handleLogout}/>
+          <div id="spacer" style={{width: "100%",height: "60px"}} />
           <div className={classes.root}>
             {pageContent}
           </div>
-        </div>
+        </React.Fragment>
       );
   }
 }

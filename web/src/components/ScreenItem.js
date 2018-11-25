@@ -130,7 +130,7 @@ class ScreenItem extends Component {
     const { hover } = this.state;
 
     return (
-      <React.Fragment>
+      <div style={{marginTop: "10px"}}>
         <Typography gutterBottom variant="h5" component="h3">
           {item.name}
         </Typography>
@@ -158,7 +158,7 @@ class ScreenItem extends Component {
             </Button>
           </div>
         </div>
-      </React.Fragment>
+      </div>
     )
   }
 

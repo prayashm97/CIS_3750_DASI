@@ -59,29 +59,36 @@ export class CreateProject extends React.Component {
 
     handleSubmit = () => {
         let project = this.state.currProject;
+        let query;
 
-        console.log(project);
-
-        const query = JSON.stringify({
-          query: `mutation {
-              createScreen(input: { 
-                name: "${project.name}",
-                slides: ${JSON.stringify(project.slides)},
-                timing: ${project.timing},
-                doneBy: "5bec460d590441347c352dce"}) {
-              _id name doneBy { _id } slides timing
-            }
-          }
-          `
-        });
-
-
-        console.log(
-          query
-        )
         //If it is a new project
         if (project._id === "") {
-            fetch(process.env.REACT_APP_GRAPHQL_API_URL, {
+            query = JSON.stringify({
+                query: `mutation {
+                    createScreen(input: { 
+                        name: "${project.name}",
+                        slides: ${JSON.stringify(project.slides)},
+                        timing: ${project.timing},
+                        doneBy: "5bec460d590441347c352dce"}) {
+                    _id name doneBy { _id } slides timing
+                    }
+                }
+                `
+                });
+        } else {
+            query = JSON.stringify({
+                query: `mutation {
+                    updateScreen(_id: "${project._id}", input: { 
+                        name: "${project.name}",
+                        slides: ${JSON.stringify(project.slides)},
+                        timing: ${project.timing}) {
+                    _id name slides timing
+                    }
+                }
+                `
+                });
+        }
+        fetch(process.env.REACT_APP_GRAPHQL_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: query,
@@ -90,10 +97,7 @@ export class CreateProject extends React.Component {
             .then(({data})=> {
             console.log(data);
             this.props.handleQuit();
-            })
-        } else {
-            //call projectUpdate
-        }
+        })
     }
 
     addImage = (images) => {

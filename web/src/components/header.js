@@ -1,14 +1,9 @@
 import React from "react";
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-//import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-//import Switch from '@material-ui/core/Switch';
-//import FormControlLabel from '@material-ui/core/FormControlLabel';
-//import FormGroup from '@material-ui/core/FormGroup';
+import ArrowDropDownSharp from '@material-ui/icons/ArrowDropDownSharp';
+import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { auth } from '../firebase';
@@ -29,6 +24,32 @@ const style = {
         marginLeft: -12,
         marginRight: 20,
     },
+    rightPanel: {
+        display: 'flex',
+        justifyContent:'flex-end',
+        alignItems: "center",
+        height: "100%",
+    },
+    buttonDiv: {
+        display: 'flex',
+        justifyContent:'flex-end',
+        marginRight: "5px",
+    },
+    logo: {
+        maxWidth: "50px",
+        maxHeight: "50px",
+    },
+    headerContainer: {
+        width: "100%",
+        height: "60px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "5px 50px",
+        background: "#d4d4d4",
+        position: "fixed",
+        top: 0, left: 0, right: 0, zIndex: 1000,
+    }
 };
 
 class Header extends React.Component {
@@ -38,8 +59,6 @@ class Header extends React.Component {
         this.state = {
             anchorEl: null,
         };
-        this.handleMyAccount = this.handleMyAccount.bind(this);
-		this.handleSignOut = this.handleSignOut.bind(this);
     }
 
     handleChange = event => {
@@ -77,43 +96,42 @@ class Header extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <Typography variant="h6" color="inherit" className={classes.short} onClick={this.handleHome}>
-                            DASI
-                        </Typography>
-						<Typography variant="h6" color="inherit" className={classes.grow} onClick={this.handleHome}>
-                            
-                        </Typography>
-                            <div>
-                                <IconButton
-                                    aria-owns={open ? 'menu-appbar' : undefined}
-                                    aria-haspopup="true"
-                                    onClick={this.handleMenu}
-                                    color="inherit"
-                                >
-                                    <AccountCircle />
-                                </IconButton>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={open}
-                                    onClose={this.handleClose}
-                                >
-                                <MenuItem onClick={this.handleMyAccount}>My account</MenuItem>
-                                <MenuItem onClick={this.handleSignOut}>Sign out</MenuItem>
-                                </Menu>
-                            </div>
-                    </Toolbar>
-                </AppBar>
+                <div className={classes.headerContainer}>
+                    <img className={classes.logo} src="DASI_logo.png" alt="DASI Team Logo" />
+                    <div className={classes.rightPanel}>
+                        <div className={classes.buttonDiv}>
+                            <Button onClick={this.props.createProject} variant="contained" className={classes.button}>
+                            Create New Project
+                            </Button>
+                        </div>
+                        <IconButton
+                            aria-owns={open ? 'menu-appbar' : undefined}
+                            aria-haspopup="true"
+                            onClick={this.handleMenu}
+                            color="inherit"
+                        >
+                            <AccountCircle />
+                            <ArrowDropDownSharp />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={open}
+                            onClose={this.handleClose}
+                        >
+                            <MenuItem onClick={this.handleMyAccount}>My account</MenuItem>
+                            <MenuItem onClick={this.handleSignOut}>Sign out</MenuItem>
+                        </Menu>
+                    </div>
+                </div>
             </div>
         );
     }

@@ -78,12 +78,13 @@ export class CreateProject extends React.Component {
         } else {
             query = JSON.stringify({
                 query: `mutation {
-                    updateScreen(_id: "${project._id}", input: { 
-                        name: "${project.name}",
-                        slides: ${JSON.stringify(project.slides)},
-                        timing: ${project.timing}) {
-                    _id name slides timing
-                    }
+                    updateScreen( _id: "${project._id}", input: { 
+                      name: "${project.name}",
+                      slides: ${JSON.stringify(project.slides)}, 
+                      timing: ${project.timing},
+                     }) {
+                    _id name doneBy { _id } slides timing
+                  }
                 }
                 `
                 });

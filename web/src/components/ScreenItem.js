@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
+// import Card from '@material-ui/core/Card';
+// import CardContent from '@material-ui/core/CardContent';
+// import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import Eye from '@material-ui/icons/RemoveRedEye';
 import Edit from '@material-ui/icons/Edit';
 import FileCopy from '@material-ui/icons/FileCopy';
-
 import Typography from '@material-ui/core/Typography';
-
 import Thumbnail from './Thumbnail';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -100,7 +97,51 @@ class ScreenItem extends Component {
   }
 
   duplicateClick = () => {
-    console.log("duplicateClick", this.props.item._id)
+    let project = this.props.item;
+    console.log("duplicateClick", project._id)
+    const nameLen = project.name.length;
+    let fileCounter = project.name.slice(nameLen-2,nameLen-1)
+    console.log(fileCounter);
+    try {
+      fileCounter = String.parseInt(fileCounter);
+      console.log("Succefully parsed as number",fileCounter);
+      fileCounter++;
+    } catch (err) {
+      console.log("Failed to parse as a number");
+      fileCounter = 1;
+    }
+
+    let response = this.tryAdd(project,fileCounter);
+    //chance to expand this, to cascade the numbers up, 
+    //but the database would have to reject a repeated name creation attempt
+  }
+
+  tryAdd = (project,count) => {
+    let name;
+    if (count > 1) name = project.name.slice(0,project.name.length-3) + '(' + count + ')' 
+    else name = project.name + '(' + count + ')'
+
+    let query = JSON.stringify({
+      query: `mutation {
+          createScreen(input: {
+              name: "${name}",
+              slides: ${JSON.stringify(project.slides)},
+              timing: ${project.timing},
+              doneBy: "5bec460d590441347c352dce"}) {
+          _id name doneBy { _id } slides timing
+          }
+      }
+      `
+    });
+    fetch(process.env.REACT_APP_GRAPHQL_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: query,
+      })
+      .then(res => res.json())
+      .then(({data})=> {
+      return data;
+    })
   }
 
   deleteClick = () => {

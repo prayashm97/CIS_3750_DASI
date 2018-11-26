@@ -7,9 +7,7 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      main: '#e3ecfb',
-    },
+    type: 'light',
   },
   typography: {
     useNextVariants: true,

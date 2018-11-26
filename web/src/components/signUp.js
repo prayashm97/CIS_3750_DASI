@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 import { auth } from '../firebase';
 
@@ -73,9 +74,9 @@ class SignUp extends React.Component {
 
         return <div style={styles.loginForm}>
                     <div>
-                      <h1 style={styles.title}>
-                        Sign Up
-                      </h1>
+                    <Typography component="h2" variant="h2" gutterBottom>
+                      Sign up
+                    </Typography>
                     </div>
                     <form onSubmit={this.handleSignUp}>
                     <TextField

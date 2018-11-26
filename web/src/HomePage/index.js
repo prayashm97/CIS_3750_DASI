@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Thumbnail from '../components/Thumbnail';
 import Header from '../components/header';
 import MyAccount from '../components/myAccount';
-import { CreateProject } from '../components/createProject';
+import CreateProject from '../components/createProject';
 import ScreenItem from '../components/ScreenItem';
 import Preview from '../components/Preview';
 

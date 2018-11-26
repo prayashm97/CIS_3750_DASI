@@ -105,14 +105,18 @@ class Login extends React.Component {
                                   margin="normal"
                                 />
                                 <div style={styles.loginRow}>
-                                  <Button className={classes.button}>Forgot Password</Button>
-                                  <Button variant="contained" type="submit" className={classes.button}>
+                                  <Button fullWidth variant="contained" color="primary" type="submit" className={classes.button}>
                                     Sign In
                                   </Button>
                                 </div>
-                                <Button fullWidth variant="contained" type="reset" className={classes.button} onClick={this.handleSignUp}>
-                                  Sign Up
-                                </Button>
+                                
+                                <div style={styles.loginRow}>
+                                  <Button type="reset" className={classes.button} onClick={this.handleSignUp}>
+                                    Sign Up
+                                  </Button>
+                                  <Button className={classes.button}>Forgot Password?</Button>
+                                </div>
+                                
                             </form>
                     }
 

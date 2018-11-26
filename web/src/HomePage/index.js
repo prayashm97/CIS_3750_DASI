@@ -33,7 +33,9 @@ class HomePage extends Component {
       loading: true,
       projects: [],
       page: "homepage",
-      project: null,
+      project: {
+        
+      },
     }
   }
 
@@ -61,7 +63,11 @@ class HomePage extends Component {
   }
 
   createProject = () => {
-    this.setState({page: "project"});
+    this.setState({page: "project", project: {
+      _id: "",
+      name: "",
+      slides: [],
+    }});
   }
 
   editProject = (project) => {

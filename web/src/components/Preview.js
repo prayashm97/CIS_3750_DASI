@@ -50,7 +50,7 @@ class Preview extends Component {
   
   render() {
     return (
-      <ImageGallery ref={i => this._imageGallery = i} onScreenChange={this.onScreenChange} useBrowserFullscreen items={this.state.images} showNav={false} showThumbnails={false} showPlayButton={false} autoPlay={true} slideInterval={this.props.timing || 3000} />
+      <ImageGallery ref={i => this._imageGallery = i} useBrowserFullscreen onScreenChange={this.onScreenChange} useBrowserFullscreen items={this.state.images} showNav={false} showThumbnails={false} showPlayButton={false} autoPlay={true} slideInterval={this.props.timing || 3000} />
     );
   }
  

@@ -99,11 +99,11 @@ class Header extends React.Component {
                 <div className={classes.headerContainer}>
                     <img className={classes.logo} src="DASI_logo.png" alt="DASI Team Logo" />
                     <div className={classes.rightPanel}>
-                        <div className={classes.buttonDiv}>
+                        {this.props.page === "homepage" ? <div className={classes.buttonDiv}>
                             <Button onClick={this.props.createProject} variant="contained" className={classes.button}>
                             Create New Project
                             </Button>
-                        </div>
+                        </div> : null }
                         <IconButton
                             aria-owns={open ? 'menu-appbar' : undefined}
                             aria-haspopup="true"

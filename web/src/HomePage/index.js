@@ -33,6 +33,7 @@ class HomePage extends Component {
       loading: true,
       projects: [],
       page: "homepage",
+      project: null,
     }
   }
 
@@ -76,7 +77,7 @@ class HomePage extends Component {
   }
 
   handleQuitProject = () => {
-    this.setState({page: "homepage"})
+    this.setState({page: "homepage", project: null})
     this.getScreens();
   }
 	
@@ -119,7 +120,7 @@ class HomePage extends Component {
 
       return (
         <React.Fragment>
-          <Header createProject={this.createProject} onPageChangeHome={this.handleQuitProject} onPageChangeAccount={() => this.handlePageChange("myAccount")} onLogout={this.handleLogout}/>
+          <Header page={page} createProject={this.createProject} onPageChangeHome={this.handleQuitProject} onPageChangeAccount={() => this.handlePageChange("myAccount")} onLogout={this.handleLogout}/>
           <div id="spacer" style={{width: "100%",height: "60px"}} />
           <div className={classes.root}>
             {pageContent}

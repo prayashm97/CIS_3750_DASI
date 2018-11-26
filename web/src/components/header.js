@@ -41,14 +41,16 @@ const style = {
     },
     headerContainer: {
         width: "100%",
-        height: "60px",
+        height: "70px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         padding: "5px 50px",
-        background: "#d4d4d4",
+        background: "#f7f7f7",
         position: "fixed",
         top: 0, left: 0, right: 0, zIndex: 1000,
+        borderStyle: 'solid',
+        borderWidth:' 0px 0px 2px 0px',
     }
 };
 
@@ -100,7 +102,7 @@ class Header extends React.Component {
                     <img className={classes.logo} src="DASI_logo.png" alt="DASI Team Logo" />
                     <div className={classes.rightPanel}>
                         <div className={classes.buttonDiv}>
-                            <Button onClick={this.props.createProject} variant="contained" className={classes.button}>
+                            <Button color="primary" onClick={this.props.createProject} variant="contained" className={classes.button}>
                             Create New Project
                             </Button>
                         </div>

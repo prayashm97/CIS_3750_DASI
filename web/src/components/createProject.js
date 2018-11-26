@@ -1,6 +1,7 @@
 import React from "react"
 import Upload from '../components/Upload';
 import { TextField } from "@material-ui/core";
+import { withStyles } from '@material-ui/core/styles';
 
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -10,7 +11,14 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 
-export class CreateProject extends React.Component {
+
+const style = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+});
+
+class CreateProject extends React.Component {
 
     constructor(props) {
         super(props);
@@ -112,6 +120,7 @@ export class CreateProject extends React.Component {
 
     render() {
         const {currProject} = this.state;
+        const {classes} = this.props;
 
         return (
             <div style={styles.createContainer}>
@@ -157,10 +166,10 @@ export class CreateProject extends React.Component {
                         </FormControl>
                     </div>
                     <div style={styles.buttonContainer}>
-                        <Button onClick={this.handleSubmit} variant="outlined" color="primary">
+                        <Button className={classes.button} onClick={this.handleSubmit} variant="contained" color="primary">
                             Submit
                         </Button>
-                        <Button onClick={this.props.handleQuit} variant="outlined" color="secondary">
+                        <Button className={classes.button} onClick={this.props.handleQuit} variant="contained" color="secondary">
                             Quit
                         </Button>
                     </div>
@@ -169,6 +178,7 @@ export class CreateProject extends React.Component {
         );
     }
 }
+export default withStyles(style)(CreateProject);
 
   /*
   Example request for createScreen

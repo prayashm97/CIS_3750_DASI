@@ -8,10 +8,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import CloudUpload from '@material-ui/icons/CloudUpload';
 // import Thumbnail from './Thumbnail';
+import { LoadingOverlay, Loader } from 'react-overlay-loader';
+import 'react-overlay-loader/styles.css';
 
 import { withStyles } from '@material-ui/core/styles';
 
-const UPLOAD_URL = `https://upload-hub.herokuapp.com`;
+// const UPLOAD_URL = `https://upload-hub.herokuapp.com`;
+const UPLOAD_URL = `http://localhost:3005`;
+
 
 const styles = theme => ({
   dropzoneDiv: {
@@ -34,7 +38,8 @@ class Upload extends Component {
     this.state = { 
       files: [], 
       open: false, 
-      images: []
+      images: [],
+      uploading: false,
     }
   }
 
@@ -89,7 +94,7 @@ class Upload extends Component {
   }
 
   render() {
-    const { open } = this.state;
+    const { open, uploading } = this.state;
     const { classes } = this.props;
 
     return (
@@ -97,25 +102,27 @@ class Upload extends Component {
         <Dialog maxWidth={'xs'} fullWidth open={open} onClose={this.handleClose}>
           <DialogTitle>Upload Image</DialogTitle>
           <DialogContent>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-              <div className="dropzone">
-                <Dropzone
-                  accept="image/*"
-                  onDrop={this.onDrop.bind(this)}
-                  onFileDialogCancel={this.onCancel.bind(this)}
-                  multiple
-                >
-                  <div className={classes.dropzoneDiv}>
-                    <CloudUpload classes={{fontSizeLarge: classes.icon}} fontSize={'large'} />
-                  </div>
-                  <div style={{ padding:'15px'}}>
-                    <p>Drop Image to Upload</p>
-                    <p>Or Click Here</p>
-                  </div>
-                </Dropzone>
+            <LoadingOverlay style={{ width: '100%', height: '100%' }}>
+            <Loader loading={uploading} />
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <div className="dropzone">
+                  <Dropzone
+                    accept="image/*"
+                    onDrop={this.onDrop.bind(this)}
+                    onFileDialogCancel={this.onCancel.bind(this)}
+                    multiple
+                  >
+                    <div className={classes.dropzoneDiv}>
+                      <CloudUpload classes={{fontSizeLarge: classes.icon}} fontSize={'large'} />
+                    </div>
+                    <div style={{ padding:'15px'}}>
+                      <p>Drop Image to Upload</p>
+                      <p>Or Click Here</p>
+                    </div>
+                  </Dropzone>
+                </div>
               </div>
-            </div>
-            
+              </LoadingOverlay>
           </DialogContent>
           <DialogActions>
             <Button color="primary" onClick={this.handleClose}>

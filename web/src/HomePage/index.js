@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { LoadingOverlay, Loader } from 'react-overlay-loader';
+import 'react-overlay-loader/styles.css';
+
 import Thumbnail from '../components/Thumbnail';
 import Header from '../components/header';
 import MyAccount from '../components/myAccount';
@@ -30,7 +33,7 @@ class HomePage extends Component {
     super(props);
 
     this.state = {
-      loading: true,
+      loading: false,
       projects: [],
       page: "homepage",
       project: {
@@ -40,7 +43,11 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    this.getScreens();
+    this.setState({
+      loading: true,
+    }, () => {
+      this.getScreens();
+    })
   }
 
   getScreens = () => {
@@ -93,7 +100,7 @@ class HomePage extends Component {
 
   render() {
       const { classes } = this.props;
-      const { page, project} = this.state;
+      const { page, project, loading } = this.state;
 
       let pageContent = null;
 
@@ -101,6 +108,9 @@ class HomePage extends Component {
           pageContent = <CreateProject handleQuit={this.handleQuitProject} project={project} />
       } else if (page === "homepage") {
           pageContent = (
+            <LoadingOverlay style={{ width: '100%', height: '100%' }}>
+            <Loader loading={loading} />
+
             <React.Fragment>
               {this.state.projects && this.state.projects.length > 0 ?
                 <aside style={{marginTop: '25px'}}>
@@ -113,8 +123,43 @@ class HomePage extends Component {
                     )})}
                   </React.Fragment>
                 </aside>
-              : <div></div>}
+              : <div
+              style={{
+                fontFamily: 'Nunito Sans,Roboto,sans-serif',
+                color: '#888888',
+                minHeight: '475px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  letterSpacing: '0.64px',
+                  lineHeight: '22px',
+                  textAlign: 'center',
+                }}
+              >
+                  You currently have no projects
+                </span>
+              <br />
+              <span
+                style={{
+                  fontSize: '14px',
+                  fontWeight: '400',
+                  letterSpacing: '0.5px',
+                  lineHeight: '17px',
+                  textAlign: 'center',
+                }}
+              >
+                  Click on `Create New Project` to get started
+                </span>
+            </div>}
             </React.Fragment>
+            </LoadingOverlay>
           )
       } else if (page === "myAccount") {
           pageContent = <MyAccount onPageChange={this.handleQuitProject}/>
